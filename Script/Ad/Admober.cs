@@ -15,5 +15,17 @@ namespace surfm.tool.ad {
             bannerView.LoadAd(request);
         }
 
+        public static InterstitialAd requestInterstitial() {
+            string adUnitId = AdConfig.getInstance().getInterstitialKey();
+
+            // Initialize an InterstitialAd.
+            InterstitialAd interstitial = new InterstitialAd(adUnitId);
+            // Create an empty ad request.
+            AdRequest request = new AdRequest.Builder().Build();
+            // Load the interstitial with the request.
+            interstitial.LoadAd(request);
+            return interstitial;
+        }
+
     }
 }

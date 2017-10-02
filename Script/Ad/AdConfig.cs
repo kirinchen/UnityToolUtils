@@ -11,6 +11,11 @@ namespace surfm.tool.ad {
         public string admobBannerIosKey;
         public string admobBannerExKey;
 
+        public string admobInterstitialEditorKey;
+        public string admobInterstitialAndroidKey;
+        public string admobInterstitialIosKey;
+        public string admobInterstitialExKey;
+
         public string getAdmobKey() {
 #if UNITY_EDITOR
             return admobBannerEditorKey;
@@ -20,6 +25,18 @@ namespace surfm.tool.ad {
         return admobBannerIosKey;
 #else
         return admobBannerExKey;
+#endif
+        }
+
+        public string getInterstitialKey() {
+#if UNITY_EDITOR
+            return admobInterstitialEditorKey;
+#elif UNITY_ANDROID
+        return admobInterstitialAndroidKey;
+#elif UNITY_IPHONE
+        return admobInterstitialIosKey;
+#else
+        return admobInterstitialExKey;
 #endif
         }
 
