@@ -7,13 +7,13 @@ using UnityEngine;
 using System;
 
 namespace surfm.tool {
-    public abstract class BaseAdapter<DATA> : ScrollRectItemsAdapter8<BaseParams, ItemHolder<DATA>> {
+    public abstract class BaseAdapter : ScrollRectItemsAdapter8<BaseParams, ItemHolder> {
 
 
 
         private Dictionary<Type, ItemView> prefabMap = new Dictionary<Type, ItemView>();
 
-        public abstract List<DATA> listData();
+        public abstract List<object> listData();
 
         internal void init(List<ItemView.D> l, BaseParams p) {
             Init(p);
@@ -28,9 +28,9 @@ namespace surfm.tool {
             ChangeItemCountTo(getCount());
         }
 
-        protected override ItemHolder<DATA> CreateViewsHolder(int itemIndex) {
-            DATA d = listData()[itemIndex];
-            ItemHolder<DATA> ans = genHolder(d, itemIndex);
+        protected override ItemHolder CreateViewsHolder(int itemIndex) {
+            object d = listData()[itemIndex];
+            ItemHolder ans = genHolder(d, itemIndex);
             RectTransform rect = prefabMap[d.GetType()].prefab;
             ans.Init(rect, itemIndex);
             return ans;
@@ -38,7 +38,7 @@ namespace surfm.tool {
 
 
         public abstract int getCount();
-        internal abstract ItemHolder<DATA> genHolder(DATA d, int itemIndex);
+        internal abstract ItemHolder genHolder(object d, int itemIndex);
 
         protected override float GetItemHeight(int index) {
             return prefabMap[listData()[index].GetType()].height;
@@ -48,12 +48,12 @@ namespace surfm.tool {
             return prefabMap[listData()[index].GetType()].width;
         }
 
-        protected override bool IsRecyclable(ItemHolder<DATA> potentiallyRecyclable, int indexOfItemThatWillBecomeVisible, float heightOfItemThatWillBecomeVisible) {
+        protected override bool IsRecyclable(ItemHolder potentiallyRecyclable, int indexOfItemThatWillBecomeVisible, float heightOfItemThatWillBecomeVisible) {
             return potentiallyRecyclable.CanPresentModelType(listData()[indexOfItemThatWillBecomeVisible]);
         }
 
-        protected override void UpdateViewsHolder(ItemHolder<DATA> newOrRecycled) {
-            DATA model = listData()[newOrRecycled.itemIndex];
+        protected override void UpdateViewsHolder(ItemHolder newOrRecycled) {
+            object model = listData()[newOrRecycled.itemIndex];
             newOrRecycled.UpdateViews(model/*, _Sizes[newOrRecycled.itemIndex]*/);
         }
     }

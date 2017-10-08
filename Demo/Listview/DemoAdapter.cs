@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace surfm.tool.demo {
-    public class DemoAdapter : BaseAdapter<string> {
+    public class DemoAdapter : BaseAdapter {
 
         public List<string> data = new List<string>();
 
@@ -19,15 +19,15 @@ namespace surfm.tool.demo {
             return data.Count;
         }
 
-        public override List<string> listData() {
-            return data;
+        public override List<object> listData() {
+            return data.ConvertAll(o => { return (object)o; });
         }
 
-        internal override ItemHolder<string> genHolder(string d, int itemIndex) {
+        internal override ItemHolder genHolder(object d, int itemIndex) {
             return new Holder();
         }
 
-        public class Holder : ItemHolder<string> {
+        public class Holder : ItemHolder {
 
             public Text text;
 
@@ -39,8 +39,8 @@ namespace surfm.tool.demo {
                 text = root.Find("Text").GetComponent<Text>();
             }
 
-            internal override void UpdateViews(string model) {
-                text.text = model;
+            internal override void UpdateViews(object model) {
+                text.text = (string)model;
             }
         }
     }

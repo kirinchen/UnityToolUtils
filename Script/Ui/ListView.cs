@@ -7,11 +7,12 @@ namespace surfm.tool {
 
         public BaseParams parms;
         public List<ItemView.D> prefabList;
+        public BaseAdapter adapter { get; private set; }
 
-
-        public void setAdapter<T>(BaseAdapter<T> ba) {
-            ba.init(prefabList, parms);
-            ba.notifyDataChanage();
+        public void setAdapter(BaseAdapter ba) {
+            adapter = ba;
+            adapter.init(prefabList, parms);
+            adapter.notifyDataChanage();
         }
 
     }
