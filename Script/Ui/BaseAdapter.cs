@@ -9,13 +9,11 @@ using System;
 namespace surfm.tool {
     public abstract class BaseAdapter : ScrollRectItemsAdapter8<BaseParams, ItemHolder> {
 
-
-
         private Dictionary<Type, ItemView> prefabMap = new Dictionary<Type, ItemView>();
 
         public abstract List<object> listData();
 
-        internal void init(List<ItemView.D> l, BaseParams p) {
+        internal void init( List<ItemView.D> l, BaseParams p) {
             Init(p);
             l.ForEach(b => {
                 ItemView iv = new ItemView(b);
@@ -35,7 +33,6 @@ namespace surfm.tool {
             ans.Init(rect, itemIndex);
             return ans;
         }
-
 
         public abstract int getCount();
         internal abstract ItemHolder genHolder(object d, int itemIndex);
