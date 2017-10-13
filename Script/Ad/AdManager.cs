@@ -8,6 +8,7 @@ namespace surfm.tool.ad {
 
         public static AdManager instance { get; private set; }
         private VideoAd unityAds;
+        private Admober admober;
 
         void Awake() {
             if (instance != null) {
@@ -17,6 +18,12 @@ namespace surfm.tool.ad {
             instance = this;
             DontDestroyOnLoad(this);
             initUnityAds();
+            initAdmob();
+        }
+
+        private void initAdmob() {
+            if (!AdConfig.getInstance().admobEnable) return;
+            admober = gameObject.AddComponent<Admober>();
         }
 
         private void initUnityAds() {
@@ -26,12 +33,12 @@ namespace surfm.tool.ad {
 
 
         public void showVideo(string key = "", Action<bool, object> cb = null) {
-            unityAds.showAd(key, cb);
+            if(unityAds!=null) unityAds.showAd(key, cb);
         }
 
         public bool showInterstitialAd() {
-
-            return false;
+            if (admober == null) return false;
+            return admober.showInterstitialAd();
         }
 
         public interface VideoAd {

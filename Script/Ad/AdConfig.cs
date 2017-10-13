@@ -7,6 +7,7 @@ namespace surfm.tool.ad {
     public class AdConfig : MonoBehaviour {
         private static AdConfig instance;
         [Header("Admob Settings")]
+        public bool admobEnable;
         public string admobBannerEditorKey;
         public string admobBannerAndroidKey;
         public string admobBannerIosKey;
