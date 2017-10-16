@@ -30,6 +30,11 @@ namespace surfm.tool {
         public IntEvent floatEvent;
 
         [System.Serializable]
+        public class BoolEvent : UnityEvent<bool> { }
+        public bool boolData;
+        public BoolEvent boolEvent;
+
+        [System.Serializable]
         public class StringEvent : UnityEvent<string> { }
         public string stringData;
         public StringEvent stringEvent;
@@ -43,6 +48,7 @@ namespace surfm.tool {
             if (intEvent != null) intEvent.Invoke(intData);
             if (floatEvent != null) floatEvent.Invoke(floatData);
             if (stringEvent != null) stringEvent.Invoke(stringData);
+            boolEvent.Invoke(boolData);
 
         }
 
