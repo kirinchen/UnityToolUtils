@@ -15,15 +15,18 @@ namespace surfm.tool {
             RenderTexture.active = null; // JC: added to avoid errors
             Destroy(rt);
             byte[] bytes = screenShot.EncodeToPNG();
+            System.IO.FileInfo file = new System.IO.FileInfo(filename);
+            file.Directory.Create();
             System.IO.File.WriteAllBytes(filename, bytes);
-            Debug.Log(string.Format("Took screenshot to: {0}  exit={1} ", filename, System.IO.File.Exists(filename)));
+            Debug.Log(string.Format("Took screenshot to: {0}  exit={1} w={2} h={3} ", filename, System.IO.File.Exists(filename), resWidth, resHeight));
 
         }
 
         public static void takeCameraShot(Camera camera, string filename) {
-            int resWidth = (int)camera.rect.width;
-            int resHeight = (int)camera.rect.height;
-            takeCameraShot(camera, resWidth, resHeight, filename);
+            float resHeight = Screen.currentResolution.height;
+            float resWidth = Screen.currentResolution.width;
+
+            takeCameraShot(camera,(int) resWidth, (int)resHeight, filename);
         }
     }
 }
