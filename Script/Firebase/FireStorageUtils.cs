@@ -1,9 +1,11 @@
-﻿using Firebase;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+#if Firebase
+using Firebase;
 using Firebase.Storage;
+#endif
 using System.Text;
 
 namespace surfm.tool {

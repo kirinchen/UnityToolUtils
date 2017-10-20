@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+# if Admob
 using GoogleMobileAds.Api;
+#endif
 using System;
 
 namespace surfm.tool.ad {
     public class Admober : MonoBehaviour {
 
+#if Admob
         private InterstitialAd interstitialAd;
 
         void Start() {
@@ -44,5 +48,8 @@ namespace surfm.tool.ad {
                 return false;
             }
         }
+#else
+        internal bool showInterstitialAd() { return false; }
+#endif
     }
 }
