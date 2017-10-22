@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 namespace surfm.tool.ad {
     public class UnityAds : MonoBehaviour, AdManager.VideoAd {
-
         [System.Serializable]
         public class KeyPlacementId {
             public string key;
             public string id;
             public string desc;
         }
+
+#if UNITY_IOS ||  UNITY_IPHONE  || UNITY_ANDROID
 
         void Awake() {
             string gid = AdConfig.getInstance().getUnityAdsGameId();
@@ -41,6 +42,9 @@ namespace surfm.tool.ad {
             Advertisement.Show(zone, options);
         }
 
-
+#else
+        public void showAd(string key = "", Action<bool, object> cb = null) {
+        }
+#endif
     }
 }

@@ -39,7 +39,7 @@ namespace surfm.tool.ad {
 #elif UNITY_IPHONE
         return !string.IsNullOrEmpty(unityAdsIosGameId);
 #else
-        return null;
+        return false;
 #endif
         }
 
