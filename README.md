@@ -7,3 +7,4 @@
    **  create mcs.rsp in your project , and choose functions
   - firebase =>  -define:Firebase
   - Admob => -define:Admob
+  - UnityAds => -define:UnityAds
