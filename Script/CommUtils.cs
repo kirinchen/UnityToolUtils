@@ -10,7 +10,11 @@ namespace surfm.tool {
         public static string getSha1(byte[] bytes) {
             var sha1 = SHA1.Create();
             byte[] hashBytes = sha1.ComputeHash(bytes);
-            return Convert.ToBase64String(hashBytes);
+            StringBuilder sb = new StringBuilder(hashBytes.Length * 2);
+            foreach (byte b in hashBytes) {
+                sb.AppendFormat("{0:x2}", b);
+            }
+            return sb.ToString();
         }
     }
 }
