@@ -13,7 +13,7 @@ namespace surfm.tool {
 
         public abstract List<object> listData();
 
-        internal void init( List<ItemView.D> l, BaseParams p) {
+        internal void init(List<ItemView.D> l, BaseParams p) {
             Init(p);
             l.ForEach(b => {
                 ItemView iv = new ItemView(b);
@@ -28,14 +28,25 @@ namespace surfm.tool {
 
         protected override ItemHolder CreateViewsHolder(int itemIndex) {
             object d = listData()[itemIndex];
-            ItemHolder ans = genHolder(d, itemIndex);
+            ItemHolder ans = getHoder(d, itemIndex);
             RectTransform rect = prefabMap[d.GetType()].prefab;
             ans.Init(rect, itemIndex);
             return ans;
         }
 
+        private ItemHolder getHoder(object d, int itemIndex) {
+            ItemView iv = prefabMap[d.GetType()];
+            if (string.IsNullOrEmpty(iv.hoderType)) {
+                return genHolder(d, itemIndex);
+            } else {
+                Type type = Type.GetType(iv.hoderType);
+                ItemHolder i = (ItemHolder)Activator.CreateInstance(type);
+                return i;
+            }
+        }
+
         public abstract int getCount();
-        internal abstract ItemHolder genHolder(object d, int itemIndex);
+        internal virtual ItemHolder genHolder(object d, int itemIndex) { return null; }
 
         protected override float GetItemHeight(int index) {
             return prefabMap[listData()[index].GetType()].height;
