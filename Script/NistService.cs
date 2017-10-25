@@ -15,11 +15,15 @@ namespace surfm.tool {
         private URestApi rest;
         private float _lastCheckAt;
         private DateTime _lastCheckTime;
+        private List<Action> initedListeners = new List<Action>();
+
 
         private void init() {
             rest = GetComponent<URestApi>();
             fetch(d => {
-                Debug.Log("NistService init=" + d + " it`s "+state);
+                Debug.Log("NistService init=" + d + " it`s " + state);
+                initedListeners.ForEach(a => { a(); });
+                initedListeners = null;
             });
         }
 
@@ -65,6 +69,14 @@ namespace surfm.tool {
                 fetch(cb);
             }
 
+        }
+
+        public void addInitListener(Action a) {
+            if (initedListeners == null) {
+                a();
+            } else {
+                initedListeners.Add(a);
+            }
         }
 
         public static NistService getInstance() {
