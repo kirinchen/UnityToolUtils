@@ -11,6 +11,12 @@ namespace surfm.tool {
         private Tabset tabset;
         public TriggerEvent.BoolEvent selectEvent;
 
+        void Awake() {
+            if (triggerButton == null) {
+                triggerButton = GetComponent<Button>();
+            }
+        }
+
         internal void init(Tabset tb) {
             tabset = tb;
             triggerButton.onClick.AddListener(onTabClick);
