@@ -8,11 +8,14 @@ namespace surfm.tool {
         private List<Tab> tabs;
         public Tab currentSelect;
 
-        public void Awake() {
-            tabs = new List<Tab>(GetComponentsInChildren<Tab>());
-        }
+
 
         public void Start() {
+            initTabs();
+        }
+
+        public void initTabs() {
+            tabs = new List<Tab>(GetComponentsInChildren<Tab>());
             tabs.ForEach(t => {
                 t.init(this);
             });
