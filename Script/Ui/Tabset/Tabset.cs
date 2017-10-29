@@ -7,7 +7,7 @@ namespace surfm.tool {
 
         private List<Tab> tabs;
         public Tab currentSelect;
-
+        public TriggerEvent.BoolEvent onSelectedEvent;
 
 
         public void Start() {
@@ -33,6 +33,9 @@ namespace surfm.tool {
             tabs.ForEach(t => {
                 t.setSelectUi(t == currentSelect);
             });
+            if (currentSelect != null) {
+                onSelectedEvent.Invoke(true);
+            }
         }
 
     }

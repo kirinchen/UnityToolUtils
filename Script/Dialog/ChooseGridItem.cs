@@ -9,8 +9,10 @@ namespace surfm.tool {
 
         public Image titleImg;
         public Text text;
+        public ChooseDialog.RowData lastData { get; private set; } 
 
         internal void setData(ChooseDialog.RowData d) {
+            lastData = d;
             gameObject.SetActive(true);
             titleImg.sprite = d.sprite;
             text.text = d.text;

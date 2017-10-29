@@ -19,6 +19,7 @@ namespace surfm.tool {
         private GridLayoutGroup group;
         private RectTransform groupRectT;
         private Tabset tabset;
+        private Action<bool, RowData> onSelect;
 
         public override void Awake() {
             base.Awake();
@@ -41,6 +42,22 @@ namespace surfm.tool {
             gridList.reflesh();
             tabset.initTabs();
             return this;
+        }
+
+        public ChooseDialog setCallback(Action<bool, RowData> s) {
+            onSelect = s;
+            return this;
+        }
+
+        public void onCancelClick() {
+            show(false);
+            onSelect(false,default(RowData));
+        }
+
+        public void onConfirmClick() {
+            show(false);
+            ChooseGridItem ci= tabset.currentSelect.GetComponent<ChooseGridItem>();
+            onSelect(true, ci.lastData);
         }
 
     }
