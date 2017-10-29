@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace surfm.tool {
     public class ChooseDialog : Dialog {
 
-        public static ChooseDialog instance { get; private set; }
+      
         public struct RowData {
             public Sprite sprite;
             public string text;
@@ -23,7 +23,7 @@ namespace surfm.tool {
 
         public override void Awake() {
             base.Awake();
-            instance = this;
+            
             gridList = GetComponentInChildren<ChooseGridList>();
             group = GetComponentInChildren<GridLayoutGroup>();
             tabset = GetComponentInChildren<Tabset>();
