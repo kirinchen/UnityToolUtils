@@ -14,14 +14,14 @@ namespace surfm.tool {
         private State state = State.Padding;
         private URestApi rest;
         private float _lastCheckAt;
-        private DateTime _lastCheckTime;
+        private DateTime _lastCheckTime = DateTime.UtcNow;
         private List<Action> initedListeners = new List<Action>();
 
 
         private void init() {
             rest = GetComponent<URestApi>();
             fetch(d => {
-                Debug.Log("NistService init=" + d + " it`s " + state);
+                Debug.Log("NistService init=" + d + " it`s " + state + " org=" + DateTime.UtcNow);
                 initedListeners.ForEach(a => { a(); });
                 initedListeners = null;
             });

@@ -11,6 +11,7 @@ namespace surfm.tool {
         public struct RowData {
             public Sprite sprite;
             public string text;
+            public object target;
         }
 
         private ChooseGridList gridList;
