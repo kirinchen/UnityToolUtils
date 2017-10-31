@@ -37,7 +37,7 @@ namespace surfm.tool {
         public ChooseDialog setData(List<RowData> data) {
             this.data = data;
             float dy = group.cellSize.y + group.spacing.y;
-            float tY = dy * data.Count * 1.1f;
+            float tY = dy * data.Count * 1.01f;
             groupRectT.sizeDelta = new Vector2(groupRectT.sizeDelta.x, tY);
             gridList.reflesh();
             tabset.initTabs();

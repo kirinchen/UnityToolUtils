@@ -6,6 +6,7 @@ namespace surfm.tool {
         public Vector3 toPos;
         void Awake() {
             transform.localPosition = toPos;
+            Destroy(this);
         }
 
     }
