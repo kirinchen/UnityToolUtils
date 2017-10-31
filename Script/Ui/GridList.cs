@@ -32,12 +32,14 @@ namespace surfm.tool {
             while (ds.Count > rows.Count) {
                 createTile();
             }
-
         }
+
+        internal virtual void initTile(E e) { }
 
         private void createTile() {
             E nE = Instantiate(template, transform, false);
             rows.Add(nE);
+            initTile(nE);
         }
     }
 }
