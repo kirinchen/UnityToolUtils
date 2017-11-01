@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 namespace surfm.tool {
     public class UnityUtils : MonoBehaviour {
         public static void takeCameraShot(Camera camera, int resWidth, int resHeight, string filename) {
@@ -28,5 +31,18 @@ namespace surfm.tool {
 
             takeCameraShot(camera,(int) resWidth, (int)resHeight, filename);
         }
+
+        public static void addEventTrigger(EventTrigger eventTrigger, UnityAction<BaseEventData> action, EventTriggerType triggerType) {
+            // Create a nee TriggerEvent and add a listener
+            EventTrigger.TriggerEvent trigger = new EventTrigger.TriggerEvent();
+            trigger.AddListener(action); // you can capture and pass the event data to the listener
+
+            // Create and initialise EventTrigger.Entry using the created TriggerEvent
+            EventTrigger.Entry entry = new EventTrigger.Entry() { callback = trigger, eventID = triggerType };
+
+            // Add the EventTrigger.Entry to delegates list on the EventTrigger
+            eventTrigger.triggers.Add(entry);
+        }
+
     }
 }
