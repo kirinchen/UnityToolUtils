@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace surfm.tool {
+    [RequireComponent(typeof(GAui))]
     public class Popup : MonoBehaviour {
 
         private GAui gaui;

@@ -39,7 +39,8 @@ namespace surfm.tool {
         public string stringData;
         public StringEvent stringEvent;
 
-
+        [System.Serializable]
+        public class FuncEvent<T> : UnityEvent<FuncResult<T>> { }
 
         public void invoke() {
             if (emptyEvent != null) emptyEvent.Invoke();
@@ -50,6 +51,10 @@ namespace surfm.tool {
             if (stringEvent != null) stringEvent.Invoke(stringData);
             boolEvent.Invoke(boolData);
 
+        }
+
+        public struct FuncResult<T> {
+            public T t;
         }
 
 
