@@ -29,7 +29,7 @@ namespace surfm.tool {
             float resHeight = Screen.currentResolution.height;
             float resWidth = Screen.currentResolution.width;
 
-            takeCameraShot(camera,(int) resWidth, (int)resHeight, filename);
+            takeCameraShot(camera, (int)resWidth, (int)resHeight, filename);
         }
 
         public static void addEventTrigger(EventTrigger eventTrigger, UnityAction<BaseEventData> action, EventTriggerType triggerType) {
@@ -42,6 +42,18 @@ namespace surfm.tool {
 
             // Add the EventTrigger.Entry to delegates list on the EventTrigger
             eventTrigger.triggers.Add(entry);
+        }
+
+        public static Coroutine loop(MonoBehaviour mb, System.Action a, float start,float it) {
+            return mb.StartCoroutine(_loop(a, start, it));
+        }
+
+        private static IEnumerator _loop(System.Action a, float start, float it) {
+            yield return new WaitForSeconds(start);
+            while (true) {
+                a();
+                yield return new WaitForSeconds(it);
+            }
         }
 
     }
