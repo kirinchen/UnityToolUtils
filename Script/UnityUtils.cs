@@ -32,7 +32,7 @@ namespace surfm.tool {
             takeCameraShot(camera, (int)resWidth, (int)resHeight, filename);
         }
 
-        public static void addEventTrigger(EventTrigger eventTrigger, UnityAction<BaseEventData> action, EventTriggerType triggerType) {
+        public static EventTrigger.Entry addEventTrigger(EventTrigger eventTrigger, UnityAction<BaseEventData> action, EventTriggerType triggerType) {
             // Create a nee TriggerEvent and add a listener
             EventTrigger.TriggerEvent trigger = new EventTrigger.TriggerEvent();
             trigger.AddListener(action); // you can capture and pass the event data to the listener
@@ -42,9 +42,14 @@ namespace surfm.tool {
 
             // Add the EventTrigger.Entry to delegates list on the EventTrigger
             eventTrigger.triggers.Add(entry);
+            return entry;
         }
 
-        public static Coroutine loop(MonoBehaviour mb, System.Action a, float start,float it) {
+        public static Coroutine delay(MonoBehaviour mb, System.Action a, float it) {
+            return mb.StartCoroutine(_delay(a, it));
+        }
+
+        public static Coroutine loop(MonoBehaviour mb, System.Action a, float start, float it) {
             return mb.StartCoroutine(_loop(a, start, it));
         }
 
@@ -54,6 +59,12 @@ namespace surfm.tool {
                 a();
                 yield return new WaitForSeconds(it);
             }
+        }
+
+        private static IEnumerator _delay(System.Action a, float it) {
+            yield return new WaitForSeconds(it);
+            a();
+
         }
 
     }
