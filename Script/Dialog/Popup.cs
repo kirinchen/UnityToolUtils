@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace surfm.tool {
-    [RequireComponent(typeof(GAui))]
     public class Popup : MonoBehaviour {
 
-        private GAui gaui;
+        public GAui gaui;
         public bool showed { get; private set; }
 
         public virtual void Awake() {
-            gaui = GetComponent<GAui>();
+            if (gaui == null) {
+                gaui = GetComponent<GAui>();
+            }
         }
 
         public void show(bool b) {
