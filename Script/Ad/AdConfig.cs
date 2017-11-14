@@ -83,7 +83,7 @@ namespace surfm.tool.ad {
 
         public static AdConfig getInstance() {
             if (instance == null) {
-                instance = Resources.Load<AdConfig>("AdConfig");
+                instance = Resources.Load<AdConfig>("@AdConfig");
             }
             return instance;
         }

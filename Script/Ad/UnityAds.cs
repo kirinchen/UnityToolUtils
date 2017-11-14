@@ -14,7 +14,7 @@ namespace surfm.tool.ad {
             public string desc;
         }
 
-#if UnityAds  && (UNITY_IOS ||  UNITY_IPHONE  || UNITY_ANDROID || UNITY_EDITOR)
+#if UnityAds  && (UNITY_IOS ||  UNITY_IPHONE  || UNITY_ANDROID )
 
         void Awake() {
             string gid = AdConfig.getInstance().getUnityAdsGameId();
