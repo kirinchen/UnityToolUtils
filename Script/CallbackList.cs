@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace surfm.tool {
-    public class CallbackList  {
+    public class CallbackList {
 
         private List<Action> list = new List<Action>();
 
-        public void add( Action a) {
+        public void add(Action a) {
             if (list == null) {
                 a();
             } else {
@@ -16,6 +16,7 @@ namespace surfm.tool {
         }
 
         public void done() {
+            if (list == null) return;
             list.ForEach(a => a());
             list = null;
         }

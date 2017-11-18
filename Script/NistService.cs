@@ -61,6 +61,10 @@ namespace surfm.tool {
             }
         }
 
+        internal static DateTime getTime() {
+            return getInstance().getCurrentUtcTime();
+        }
+
         public void fetchCurrentTime(Action<DateTime> cb) {
             if (state == State.OK) {
                 fixCurrentUtcTime();
