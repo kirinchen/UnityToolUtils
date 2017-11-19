@@ -21,7 +21,8 @@ namespace surfm.tool {
             list = null;
         }
 
-
-
+        internal void reset() {
+            list = new List<Action>();
+        }
     }
 }
