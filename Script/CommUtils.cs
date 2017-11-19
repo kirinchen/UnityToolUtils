@@ -57,5 +57,16 @@ namespace surfm.tool {
             }
         }
 
+        internal static bool isListEqua<T>(List<T> la, List<T> lb) {
+            if (la == lb) return true;
+            if (la == null || lb==null) return false;
+            if (la.Count != lb.Count) return false;
+            for (int i=0;i<la.Count;i++) {
+                if (!la[i].Equals(lb[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

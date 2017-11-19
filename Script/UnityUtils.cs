@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -64,7 +65,19 @@ namespace surfm.tool {
         private static IEnumerator _delay(System.Action a, float it) {
             yield return new WaitForSeconds(it);
             a();
+        }
 
+        public static void setAsync(MonoBehaviour mb, Task task, System.Action cb) {
+            mb.StartCoroutine(setAsync(task, cb));
+        }
+
+        public static IEnumerator setAsync(Task task, System.Action cb) {
+            yield return new WaitUntil(() => task.IsCompleted);
+            if (task.IsFaulted) {
+                throw task.Exception;
+            } else {
+                cb();
+            }
         }
 
     }
