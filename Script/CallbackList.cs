@@ -15,8 +15,12 @@ namespace surfm.tool {
             }
         }
 
+        public bool isDone() {
+            return list == null;
+        }
+
         public void done() {
-            if (list == null) return;
+            if (isDone()) return;
             list.ForEach(a => a());
             list = null;
         }
