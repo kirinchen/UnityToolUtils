@@ -57,7 +57,12 @@ namespace surfm.tool {
         }
 
         protected override bool IsRecyclable(ItemHolder potentiallyRecyclable, int indexOfItemThatWillBecomeVisible, float heightOfItemThatWillBecomeVisible) {
-            return potentiallyRecyclable.CanPresentModelType(listData()[indexOfItemThatWillBecomeVisible]);
+            try {
+                return potentiallyRecyclable.CanPresentModelType(listData()[indexOfItemThatWillBecomeVisible]);
+            } catch (ArgumentOutOfRangeException e) {
+                notifyDataChanage();
+                return false;
+            }
         }
 
         protected override void UpdateViewsHolder(ItemHolder newOrRecycled) {
