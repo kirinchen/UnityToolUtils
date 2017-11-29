@@ -18,6 +18,8 @@ namespace surfm.tool.ad {
         public string admobInterstitialIosKey;
         public string admobInterstitialExKey;
 
+        public bool autoRequestBanner = true;
+        public GoogleMobileAds.Api.AdPosition autoRequestBannerPosition = GoogleMobileAds.Api.AdPosition.Bottom;
 
         [Header("UnityADS Settings")]
         public string unityAdsIosGameId;

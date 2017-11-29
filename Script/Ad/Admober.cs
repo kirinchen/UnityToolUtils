@@ -15,13 +15,15 @@ namespace surfm.tool.ad {
 
         void Start() {
             interstitialAd = requestInterstitial();
-            requestBanner();
+            if (AdConfig.getInstance().autoRequestBanner) {
+                requestBanner(AdConfig.getInstance().autoRequestBannerPosition);
+            }
         }
 
-        public static void requestBanner() {
+        public static void requestBanner(AdPosition p = AdPosition.Bottom) {
             string adUnitId = AdConfig.getInstance().getAdmobKey();
             // Create a 320x50 banner at the top of the screen.
-            BannerView bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+            BannerView bannerView = new BannerView(adUnitId, AdSize.SmartBanner, p);
             // Create an empty ad request.
             AdRequest request = new AdRequest.Builder().Build();
             // Load the banner with the request.
