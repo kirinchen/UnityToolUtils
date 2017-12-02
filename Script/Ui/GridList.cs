@@ -7,14 +7,15 @@ namespace surfm.tool {
 
         private E template;
         protected List<E> rows = new List<E>();
-
         public abstract List<D> listData();
-
         internal abstract void setEmplty(E row);
-
         internal abstract void refleshTile(D d, E e);
+        public Transform parent;
 
         public void Awake() {
+            if (parent == null) {
+                parent = transform;
+            }
             template = GetComponentInChildren<E>();
             rows.Add(template);
         }
@@ -37,7 +38,7 @@ namespace surfm.tool {
         internal virtual void initTile(E e) { }
 
         private void createTile() {
-            E nE = Instantiate(template, transform, false);
+            E nE = Instantiate(template, parent, false);
             rows.Add(nE);
             initTile(nE);
         }
