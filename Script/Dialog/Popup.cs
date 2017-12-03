@@ -13,7 +13,7 @@ namespace surfm.tool {
             }
         }
 
-        public void show(bool b) {
+        public virtual void show(bool b) {
             if (b != showed) {
                 showed = b;
                 if (showed) {
