@@ -15,5 +15,9 @@ namespace surfm.tool {
             pupop.show(b);
         }
 
+        public void hide() {
+            show(false);
+        }
+
     }
 }

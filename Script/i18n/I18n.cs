@@ -72,6 +72,13 @@ namespace surfm.tool.i18n {
             instance = null;
         }
 
+        public string _get(I18nKey k) {
+            if (string.IsNullOrEmpty(k.category)) {
+                return _get(k.key);
+            } else {
+                return _get(k.category, k.key);
+            }
+        }
 
         public string _get(string key) {
             return _get(category, key);
@@ -82,6 +89,10 @@ namespace surfm.tool.i18n {
         }
 
         public static string get(string key) {
+            return getInstance()._get(key);
+        }
+
+        public static string get(I18nKey key) {
             return getInstance()._get(key);
         }
 
