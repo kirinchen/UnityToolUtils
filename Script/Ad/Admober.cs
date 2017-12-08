@@ -16,7 +16,8 @@ namespace surfm.tool.ad {
         void Start() {
             interstitialAd = requestInterstitial();
             if (AdConfig.getInstance().autoRequestBanner) {
-                requestBanner(AdConfig.getInstance().autoRequestBannerPosition);
+                AdPosition p = (AdPosition)AdConfig.getInstance().autoRequestBannerPosition;
+                requestBanner(p);
             }
         }
 
