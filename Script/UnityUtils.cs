@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,6 +8,27 @@ using UnityEngine.EventSystems;
 
 namespace surfm.tool {
     public class UnityUtils : MonoBehaviour {
+
+        public static T getComponentByName<T>(GameObject mb, string name) where T : Component {
+            return getComponentByName<T>(mb, c => { return c.name.Equals(name); });
+        }
+
+        public static T getComponentByName<T>(GameObject mb, Predicate<T> p) where T : Component {
+            string debug = "";
+            foreach (T c in mb.GetComponentsInChildren<T>(true)) {
+                debug += c.name + ",";
+                if (p(c)) {
+                    return c;
+                }
+            }
+            return null;
+        }
+
+        public static List<T> getComponentsByName<T>(GameObject mb, Predicate<T> p) where T : Component {
+            List<T> ans = new List<T>(mb.GetComponentsInChildren<T>(true));
+            return ans.FindAll(p);
+        }
+
         public static void takeCameraShot(Camera camera, int resWidth, int resHeight, string filename) {
 
             RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
