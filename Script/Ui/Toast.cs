@@ -5,13 +5,11 @@ namespace surfm.tool {
     public class Toast : MonoBehaviour {
         private static Toast instance;
         private GAui anim;
-        private Text text;
-        private Image icon;
+        public Text text;
+        public Image icon;
         void Awake() {
             instance = this;
             anim = GetComponent<GAui>();
-            text = GetComponentInChildren<Text>();
-            icon = GetComponentInChildren<Image>();
         }
 
         public void show(string t) {
