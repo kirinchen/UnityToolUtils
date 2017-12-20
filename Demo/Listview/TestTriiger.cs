@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿# if ListViewAdapter
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,3 +13,4 @@ namespace surfm.tool.demo {
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
+﻿# if ListViewAdapter
+using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using frame8.ScrollRectItemsAdapter.MultiplePrefabsExample.ViewHolders;
 using frame8.ScrollRectItemsAdapter.Util;
 using System.Collections;
@@ -71,3 +72,5 @@ namespace surfm.tool {
         }
     }
 }
+
+#endif
