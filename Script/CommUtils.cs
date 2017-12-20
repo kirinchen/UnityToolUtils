@@ -57,6 +57,23 @@ namespace surfm.tool {
             }
         }
 
+        public static string sha1HashStringForUTF8String(string s) {
+            byte[] bytes = Encoding.UTF8.GetBytes(s);
+            var sha1 = SHA1.Create();
+            byte[] hashBytes = sha1.ComputeHash(bytes);
+
+            return hexStringFromBytes(hashBytes);
+        }
+
+        public static string hexStringFromBytes(byte[] bytes) {
+            var sb = new StringBuilder();
+            foreach (byte b in bytes) {
+                var hex = b.ToString("x2");
+                sb.Append(hex);
+            }
+            return sb.ToString();
+        }
+
         internal static bool isListEqua<T>(List<T> la, List<T> lb) {
             if (la == lb) return true;
             if (la == null || lb==null) return false;
