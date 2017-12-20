@@ -1,4 +1,5 @@
-﻿using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
+﻿# if ListViewAdapter
+using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,3 +18,4 @@ namespace surfm.tool {
 
     }
 }
+#endif
