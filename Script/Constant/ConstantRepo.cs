@@ -13,7 +13,7 @@ namespace surfm.tool {
         }
 
         private void injectAll() {
-            CommConst[] ss = Resources.LoadAll<CommConst>("/");
+            CommConst[] ss = Resources.LoadAll<CommConst>("");
             foreach (CommConst cc in ss) {
                 cc.injectCommConst(addOne);
             }
