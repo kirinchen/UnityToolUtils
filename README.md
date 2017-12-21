@@ -9,3 +9,4 @@
   - firebase =>  -define:Firebase
   - Admob => -define:Admob
   - UnityAds => -define:UnityAds
+  - ListViewAdapter => -define:ListViewAdapter
