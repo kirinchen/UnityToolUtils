@@ -23,7 +23,7 @@ namespace surfm.tool {
             return sb.ToString();
         }
 
-        public static string encryptBase64(string k,string byteKey, string source) {
+        public static string encryptBase64(string k, string byteKey, string source) {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] key = Encoding.ASCII.GetBytes(k);
             byte[] iv = Encoding.ASCII.GetBytes(byteKey);
@@ -58,11 +58,16 @@ namespace surfm.tool {
         }
 
 
+        public static T newInstance<T>(string strFullyQualifiedName) {
+            Type t = Type.GetType(strFullyQualifiedName);
+            return (T)Activator.CreateInstance(t);
+        }
+
         internal static bool isListEqua<T>(List<T> la, List<T> lb) {
             if (la == lb) return true;
-            if (la == null || lb==null) return false;
+            if (la == null || lb == null) return false;
             if (la.Count != lb.Count) return false;
-            for (int i=0;i<la.Count;i++) {
+            for (int i = 0; i < la.Count; i++) {
                 if (!la[i].Equals(lb[i])) {
                     return false;
                 }
