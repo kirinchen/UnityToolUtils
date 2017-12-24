@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace surfm.tool {
     public class ConstantRepo {
-        private static ConstantRepo instance ;
+        private static ConstantRepo instance;
         private Dictionary<string, object> map = new Dictionary<string, object>();
 
         private ConstantRepo() {
@@ -23,8 +23,8 @@ namespace surfm.tool {
             map.Add(k, v);
         }
 
-        public object opt(string k,object _default) {
-            if (map.ContainsKey(k)) return map[k];
+        public T opt<T>(string k, T _default) {
+            if (map.ContainsKey(k)) return (T)map[k];
             return _default;
         }
 
