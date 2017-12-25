@@ -9,7 +9,7 @@ namespace surfm.tool {
         private T t;
 
         public void add(Action<T> a) {
-            if (list == null) {
+            if (isDone()) {
                 a(t);
             } else {
                 list.Add(a);
@@ -22,7 +22,9 @@ namespace surfm.tool {
             list = null;
         }
 
-
+        public bool isDone() {
+            return list == null;
+        }
 
     }
 }
