@@ -35,12 +35,12 @@ namespace surfm.tool {
             }
         }
 
-        internal virtual void initTile(E e) { }
+        internal virtual void initTile(E e, int idx) { }
 
         private void createTile() {
             E nE = Instantiate(template, parent, false);
             rows.Add(nE);
-            initTile(nE);
+            initTile(nE, rows.Count - 1);
         }
     }
 }
