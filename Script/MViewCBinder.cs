@@ -27,7 +27,7 @@ namespace surfm.tool {
 
         public void reflesh(D model) {
             foreach (B b in bindMap.Values) {
-                bool showed = b.show(model);
+                bool showed = b.show==null ? true : b.show(model);
                 show(showed, b.obj);
                 if (showed) {
                     if (b.view != null) {
