@@ -102,5 +102,12 @@ namespace surfm.tool {
             }
         }
 
+        public static IEnumerator leap<I>(I i, Predicate<I> go, Action<I> task, float gap) {
+            while (go(i)) {
+                task(i);
+                yield return new WaitForSeconds(gap);
+            }
+        }
+
     }
 }
