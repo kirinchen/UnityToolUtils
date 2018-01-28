@@ -11,7 +11,7 @@ namespace surfm.tool {
             pupop = GetComponent<Popup>();
         }
 
-        public void show(bool b) {
+        public virtual void show(bool b) {
             pupop.show(b);
         }
 
