@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using surfm.yoar.holdem.holdemlobby;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -12,6 +13,7 @@ namespace surfm.tool {
         public static T getComponentByName<T>(GameObject mb, string name) where T : Component {
             return getComponentByName<T>(mb, c => { return c.name.Equals(name); });
         }
+
 
         public static T getComponentByName<T>(GameObject mb, Predicate<T> p) where T : Component {
             string debug = "";
