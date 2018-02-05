@@ -19,7 +19,7 @@ namespace surfm.tool {
             return dialog.listData();
         }
 
-        internal override void refleshTile(ChooseDialog.RowData d, ChooseGridItem e) {
+        internal override void refleshTile(ChooseDialog.RowData d, ChooseGridItem e, int idx) {
             e.setData(d);
         }
 

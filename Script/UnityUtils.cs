@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using surfm.yoar.holdem.holdemlobby;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
