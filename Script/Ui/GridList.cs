@@ -9,7 +9,7 @@ namespace surfm.tool {
         protected List<E> rows = new List<E>();
         public abstract List<D> listData();
         internal abstract void setEmplty(E row);
-        internal abstract void refleshTile(D d, E e,int idx);
+        internal abstract void refleshTile(D d, E e, int idx);
         public Transform parent;
 
         public void Awake() {
@@ -20,12 +20,17 @@ namespace surfm.tool {
             rows.Add(template);
         }
 
+        public List<E> listRow() {
+            return rows;
+        }
+
         public virtual void reflesh() {
+            initTile(template,0);
             List<D> ds = listData();
             initTiles(ds);
             rows.ForEach(r => { setEmplty(r); });
             for (int i = 0; i < ds.Count; i++) {
-                refleshTile(ds[i], rows[i],i);
+                refleshTile(ds[i], rows[i], i);
             }
         }
 
@@ -35,7 +40,7 @@ namespace surfm.tool {
             }
         }
 
-        internal virtual void initTile(E e, int idx ) { }
+        internal virtual void initTile(E e, int idx) { }
 
         private void createTile() {
             E nE = Instantiate(template, parent, false);
