@@ -16,14 +16,9 @@ namespace surfm.tool {
             }
         }
 
-
         public T get<T>() where T : Dialog {
             return (T)map[typeof(T)];
         }
-
-
-
-
 
     }
 }
