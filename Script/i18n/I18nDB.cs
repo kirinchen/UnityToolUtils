@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 namespace surfm.tool.i18n {
     public class I18nDB : MonoBehaviour {
-      
+
         public enum Language {
             NONE, Taiwan, CN, English, ru, kr, es, pt, jp
         }
@@ -68,8 +68,12 @@ namespace surfm.tool.i18n {
         public List<Term> terms = new List<Term>();
 
 
-        public static string get(string cat,string key, Language l) {
-            return getInstance(cat)._get(key, l);
+        public static string get(string cat, string key, Language l) {
+            try {
+                return getInstance(cat)._get(key, l);
+            } catch (Exception e) {
+                return string.Format("<cat:{0} key:{1} l:{2}>", cat, key, l);
+            }
         }
 
         public string _get(string key, Language l) {
