@@ -32,7 +32,7 @@ namespace surfm.tool {
 
 
         private IEnumerator delayClose() {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             anim.MoveOut(GUIAnimSystem.eGUIMove.Self);
         }
 
