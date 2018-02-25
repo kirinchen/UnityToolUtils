@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace surfm.tool {
     public class ChooseDialog : Dialog {
 
-      
+
         public struct RowData {
             public Sprite sprite;
             public string text;
@@ -18,16 +18,17 @@ namespace surfm.tool {
         private List<RowData> data = new List<RowData>();
         private GridLayoutGroup group;
         private RectTransform groupRectT;
+        private ScrollRect scroll;
         private Tabset tabset;
         private Action<bool, RowData> onSelect;
 
         public override void Awake() {
             base.Awake();
-            
             gridList = GetComponentInChildren<ChooseGridList>();
             group = GetComponentInChildren<GridLayoutGroup>();
             tabset = GetComponentInChildren<Tabset>();
             groupRectT = group.GetComponent<RectTransform>();
+            scroll = GetComponentInChildren<ScrollRect>();
         }
 
         internal List<RowData> listData() {
@@ -41,6 +42,7 @@ namespace surfm.tool {
             groupRectT.sizeDelta = new Vector2(groupRectT.sizeDelta.x, tY);
             gridList.reflesh();
             tabset.initTabs();
+            scroll.verticalNormalizedPosition = 0;
             return this;
         }
 
@@ -51,12 +53,12 @@ namespace surfm.tool {
 
         public void onCancelClick() {
             show(false);
-            onSelect(false,default(RowData));
+            onSelect(false, default(RowData));
         }
 
         public void onConfirmClick() {
             show(false);
-            ChooseGridItem ci= tabset.currentSelect.GetComponent<ChooseGridItem>();
+            ChooseGridItem ci = tabset.currentSelect.GetComponent<ChooseGridItem>();
             onSelect(true, ci.lastData);
         }
 
