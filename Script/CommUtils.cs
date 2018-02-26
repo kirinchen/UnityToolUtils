@@ -58,6 +58,17 @@ namespace surfm.tool {
         }
 
 
+        public static string encodeBase64(string plain) {
+            byte[] k = Encoding.UTF8.GetBytes(plain);
+            return Convert.ToBase64String(k);
+        }
+
+        public static string decodeBase64(string base64) {
+            byte[] data = Convert.FromBase64String(base64);
+            return Encoding.UTF8.GetString(data);
+        }
+
+
         public static T newInstance<T>(string strFullyQualifiedName) {
             Type t = Type.GetType(strFullyQualifiedName);
             return (T)Activator.CreateInstance(t);

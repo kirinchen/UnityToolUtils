@@ -80,9 +80,13 @@ namespace surfm.tool.i18n {
             if (map.Count <= 0) {
                 injectMap();
             }
-            string ans = map.ContainsKey(key) ? map[key].get(l) : key;
-            if (string.IsNullOrEmpty(ans)) {
+            if (!map.ContainsKey(key)) {
                 Debug.Log("[i18n] Not find key=" + key);
+                return key;
+            }
+            string ans = map[key].get(l);
+            if (string.IsNullOrEmpty(ans)) {
+                Debug.Log("[i18n] Not find Language=" + l + "  key=" + key);
                 return l == defaultLanguage ? key : _get(key, defaultLanguage);
             } else {
                 return ans;
