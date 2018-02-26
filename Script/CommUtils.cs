@@ -59,11 +59,13 @@ namespace surfm.tool {
 
 
         public static string encodeBase64(string plain) {
+            if (string.IsNullOrEmpty(plain)) return string.Empty;
             byte[] k = Encoding.UTF8.GetBytes(plain);
             return Convert.ToBase64String(k);
         }
 
         public static string decodeBase64(string base64) {
+            if (string.IsNullOrEmpty(base64)) return string.Empty;
             byte[] data = Convert.FromBase64String(base64);
             return Encoding.UTF8.GetString(data);
         }

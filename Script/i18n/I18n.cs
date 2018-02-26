@@ -27,7 +27,7 @@ namespace surfm.tool.i18n {
         }
 
         private I18nDB.Language getI18nName() {
-#if !UNITY_WEBGL
+
             I18nDB.Language ans = loadAssignLanguage();
             if (ans != I18nDB.Language.NONE) {
                 return ans;
@@ -49,7 +49,7 @@ namespace surfm.tool.i18n {
                 case SystemLanguage.Spanish:
                     return I18nDB.Language.es;
             }
-#endif
+
             return I18nDB.Language.English;
 
         }
