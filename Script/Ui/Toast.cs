@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+
 namespace surfm.tool {
     public class Toast : MonoBehaviour {
         private static Toast instance;
         private GAui anim;
         public Text text;
         public Image icon;
+        public Action callback;
+
         void Awake() {
             instance = this;
             anim = GetComponent<GAui>();
+        }
+
+
+        public Toast setCallback(Action a) {
+            callback = a;
+            return this;
         }
 
         public void show(string t) {
@@ -34,6 +44,11 @@ namespace surfm.tool {
         private IEnumerator delayClose() {
             yield return new WaitForSeconds(2f);
             anim.MoveOut(GUIAnimSystem.eGUIMove.Self);
+            yield return new WaitForSeconds(.3f);
+            if (callback != null) {
+                callback();
+                callback = null;
+            }
         }
 
         public static Toast getInstance() {
