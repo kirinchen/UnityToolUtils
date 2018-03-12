@@ -23,7 +23,42 @@ namespace surfm.tool {
             return sb.ToString();
         }
 
-        public static string encryptBase64(string k, string byteKey, string source) {
+
+        public static string encryptAES(string k, string byteKey, string source) {
+            AesCryptoServiceProvider des = new AesCryptoServiceProvider();
+            byte[] key = Encoding.ASCII.GetBytes(k);
+            byte[] iv = Encoding.ASCII.GetBytes(byteKey);
+            byte[] dataByteArray = Encoding.UTF8.GetBytes(source);
+            des.Key = key;
+            des.IV = iv;
+            string encrypt = "";
+            using (MemoryStream ms = new MemoryStream())
+            using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write)) {
+                cs.Write(dataByteArray, 0, dataByteArray.Length);
+                cs.FlushFinalBlock();
+                encrypt = Convert.ToBase64String(ms.ToArray());
+            }
+            return encrypt;
+        }
+
+        public static string decryptAES(string k, string byteKey, string encrypt) {
+            AesCryptoServiceProvider des = new AesCryptoServiceProvider();
+            byte[] key = Encoding.ASCII.GetBytes(k);
+            byte[] iv = Encoding.ASCII.GetBytes(byteKey);
+            des.Key = key;
+            des.IV = iv;
+
+            byte[] dataByteArray = Convert.FromBase64String(encrypt);
+            using (MemoryStream ms = new MemoryStream()) {
+                using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write)) {
+                    cs.Write(dataByteArray, 0, dataByteArray.Length);
+                    cs.FlushFinalBlock();
+                    return Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
+        }
+
+        public static string encryptDES(string k, string byteKey, string source) {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] key = Encoding.ASCII.GetBytes(k);
             byte[] iv = Encoding.ASCII.GetBytes(byteKey);
@@ -40,7 +75,7 @@ namespace surfm.tool {
             return encrypt;
         }
 
-        public static string decryptBase64(string k, string byteKey, string encrypt) {
+        public static string decryptDES(string k, string byteKey, string encrypt) {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] key = Encoding.ASCII.GetBytes(k);
             byte[] iv = Encoding.ASCII.GetBytes(byteKey);
