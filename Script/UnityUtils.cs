@@ -94,6 +94,13 @@ namespace surfm.tool {
             mb.StartCoroutine(setAsync(task, cb));
         }
 
+        public static IEnumerator wait(Func<bool> g, Action a) {
+            while (g()) {
+                yield return new WaitForSeconds(.2f);
+            }
+            a();
+        }
+
         public static IEnumerator setAsync(Task task, System.Action cb) {
             yield return new WaitUntil(() => task.IsCompleted);
             if (task.IsFaulted) {
