@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GUIAnimator;
+
 namespace surfm.tool {
     public class Loading : MonoBehaviour {
         private static Loading insatnce;
@@ -16,9 +18,9 @@ namespace surfm.tool {
             if (b != showed) {
                 showed = b;
                 if (showed) {
-                    gaui.MoveIn(GUIAnimSystem.eGUIMove.Self);
+                    gaui.PlayInAnims(eGUIMove.Self);
                 } else {
-                    gaui.MoveOut(GUIAnimSystem.eGUIMove.Self);
+                    gaui.PlayOutAnims(eGUIMove.Self);
                 }
             }
         }

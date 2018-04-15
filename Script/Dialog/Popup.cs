@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GUIAnimator;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace surfm.tool {
@@ -17,9 +18,9 @@ namespace surfm.tool {
             if (b != showed) {
                 showed = b;
                 if (showed) {
-                    gaui.MoveIn(GUIAnimSystem.eGUIMove.Self);
+                    gaui.PlayInAnims(eGUIMove.Self);
                 } else {
-                    gaui.MoveOut(GUIAnimSystem.eGUIMove.Self);
+                    gaui.PlayOutAnims(eGUIMove.Self);
                 }
             }
         }

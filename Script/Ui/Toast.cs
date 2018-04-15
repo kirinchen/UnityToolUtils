@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using GUIAnimator;
 
 namespace surfm.tool {
     public class Toast : MonoBehaviour {
@@ -35,7 +36,7 @@ namespace surfm.tool {
                 icon.color = iconColor;
             }
             text.text = t;
-            anim.MoveIn(GUIAnimSystem.eGUIMove.Self);
+            anim.PlayInAnims(eGUIMove.Self);
             StartCoroutine(delayClose());
         }
 
@@ -43,7 +44,7 @@ namespace surfm.tool {
 
         private IEnumerator delayClose() {
             yield return new WaitForSeconds(2f);
-            anim.MoveOut(GUIAnimSystem.eGUIMove.Self);
+            anim.PlayOutAnims(eGUIMove.Self);
             yield return new WaitForSeconds(.3f);
             if (callback != null) {
                 callback();
