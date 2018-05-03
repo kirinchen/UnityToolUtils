@@ -6,7 +6,7 @@ namespace surfm.tool {
     public class Popup : MonoBehaviour {
 
         public GAui gaui;
-        public bool showed { get; private set; }
+        public bool showed { get; protected set; }
 
         public virtual void Awake() {
             if (gaui == null) {
