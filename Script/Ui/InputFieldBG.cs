@@ -23,7 +23,7 @@ namespace surfm.tool {
             }
         }
 
-        new void Start() {
+        new public void Start() {
             base.Start();
             reflesh();
             onEndEdit.AddListener(onEnd);
