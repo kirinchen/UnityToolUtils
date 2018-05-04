@@ -7,9 +7,9 @@ using DG.Tweening;
 namespace surfm.tool {
     public class PopupDotWeen : Popup {
 
-        private RectTransform rectT;
+        private Transform rectT;
         new void Awake() {
-            rectT = GetComponent<RectTransform>();
+            rectT = GetComponent<Transform>();
         }
 
         void Start() {
