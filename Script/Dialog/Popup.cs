@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 namespace surfm.tool {
-    public class Popup : MonoBehaviour {
+    public class Popup : PopupAbs {
 
         public GAui gaui;
-        public bool showed { get; protected set; }
 
         public virtual void Awake() {
             if (gaui == null) {
@@ -14,15 +15,13 @@ namespace surfm.tool {
             }
         }
 
-        public virtual void show(bool b) {
-            if (b != showed) {
-                showed = b;
-                if (showed) {
-                    gaui.PlayInAnims(eGUIMove.Self);
-                } else {
-                    gaui.PlayOutAnims(eGUIMove.Self);
-                }
-            }
+
+        protected override void hide() {
+            gaui.PlayOutAnims(eGUIMove.Self);
+        }
+
+        protected override void show() {
+            gaui.PlayInAnims(eGUIMove.Self);
         }
     }
 }
