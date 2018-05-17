@@ -19,10 +19,13 @@ namespace surfm.tool {
 
 
         protected override void hide() {
-            rectT.DOScale(new Vector3(-1, -1, -1f), 0.3f).SetRelative().SetLoops(1, LoopType.Yoyo);
+            rectT.DOScale(new Vector3(-1, -1, -1f), 0.3f).SetRelative().SetLoops(1, LoopType.Yoyo).OnComplete(()=> {
+                rectT.localScale = Vector3.zero;
+            });
         }
 
         protected override void show() {
+            rectT.localScale = Vector3.zero;
             rectT.DOScale(new Vector3(1, 1, 1), 0.3f).SetRelative().SetLoops(1, LoopType.Yoyo);
         }
     }
