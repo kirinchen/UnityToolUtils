@@ -19,6 +19,7 @@ namespace surfm.tool.ad {
                 AdPosition p = (AdPosition)AdConfig.getInstance().autoRequestBannerPosition;
                 requestBanner(p);
             }
+            Debug.Log("Admob Start");
         }
 
         public static void requestBanner(AdPosition p = AdPosition.Bottom) {
@@ -48,6 +49,8 @@ namespace surfm.tool.ad {
                 interstitialAd.Show();
                 return true;
             } else {
+                interstitialAd = requestInterstitial();
+                interstitialAd.Show();
                 return false;
             }
         }

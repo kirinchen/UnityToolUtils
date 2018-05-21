@@ -73,6 +73,7 @@ namespace surfm.tool.ad {
 #if UNITY_EDITOR
             return admobInterstitialEditorKey;
 #elif UNITY_ANDROID
+            Debug.Log("getInterstitialKey="+ admobInterstitialAndroidKey);
         return admobInterstitialAndroidKey;
 #elif UNITY_IPHONE
         return admobInterstitialIosKey;
