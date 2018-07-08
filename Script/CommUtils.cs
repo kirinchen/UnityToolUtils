@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 namespace surfm.tool {
     public class CommUtils : MonoBehaviour {
@@ -122,5 +123,33 @@ namespace surfm.tool {
             }
             return true;
         }
+
+
+        public static void writeEnum(string clzName, List<string> ers, string fileDir) {
+            string fc = "public enum {0}  @  {1}  $ ";
+            string es = "\n";
+            foreach (string s in ers) {
+                es += s + ", \n";
+            }
+
+            string outputS = string.Format(fc, clzName, es);
+            outputS = outputS.Replace('@', '{');
+            outputS = outputS.Replace('$', '}');
+            System.IO.File.WriteAllText(fileDir + clzName + ".cs", outputS);
+        }
+
+        public static string getContentByClip(string plain, string startClip, string endClip) {
+            string preg = string.Format(@"\{0}([^)]*)\{1}", startClip, endClip);
+            //string preg = @"\[([^)]*)\]";
+            Regex reg = new Regex(preg);
+            Match m = reg.Match(plain);
+            if (m.Success)
+                return m.Result("$1");
+
+            return string.Empty;
+        }
+
     }
+
+
 }
