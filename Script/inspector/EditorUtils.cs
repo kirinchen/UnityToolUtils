@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 namespace surfm.tool {
@@ -18,13 +20,17 @@ namespace surfm.tool {
             popupList(title, l, inout);
         }
 
-        public static void popupList(string title, List<string> l, Func<string, string> inout) {
+        public static void popupList(string title, List<string> l, Func<string, string> inout, GUIStyle style = null) {
             int idx = -1;
             string enumName = inout(null);
             if (!string.IsNullOrEmpty(enumName) && l.Contains(enumName)) {
                 idx = l.IndexOf(enumName);
             }
-            idx = EditorGUILayout.Popup(title, idx, l.ToArray());
+            if (style == null) {
+                idx = EditorGUILayout.Popup(title, idx, l.ToArray());
+            } else {
+                idx = EditorGUILayout.Popup(title, idx, l.ToArray(), style);
+            }
             if (idx >= 0) {
                 inout(l[idx]);
             }
@@ -44,6 +50,7 @@ namespace surfm.tool {
             return prop.serializedObject.FindProperty(prentPath);
         }
 
+        
 
     }
 }
