@@ -28,7 +28,7 @@ namespace surfm.tool {
             }
         }
 
-
+        public int index;
         public List<Set> sets = new List<Set>();
 
         public void injectCommConst(Action<string, object> cb) {

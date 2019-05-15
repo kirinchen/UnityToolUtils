@@ -13,19 +13,25 @@ namespace surfm.tool {
         }
 
         private void injectAll() {
-            CommConst[] ss = Resources.LoadAll<CommConst>("");
+            List<CommConst> ss = new List<CommConst>( Resources.LoadAll<CommConst>(""));
+            ss.Sort((a,b)=> { return a.index.CompareTo(b.index); });
             foreach (CommConst cc in ss) {
                 cc.injectCommConst(addOne);
             }
         }
 
         private void addOne(string k, object v) {
+            if (map.ContainsKey(k)) map.Remove(k);
             map.Add(k, v);
         }
 
         public T opt<T>(string k, T _default) {
             if (map.ContainsKey(k)) return (T)map[k];
             return _default;
+        }
+
+        public T get<T>(string k) {
+            return (T)map[k];
         }
 
         public static ConstantRepo getInstance() {
