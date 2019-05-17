@@ -33,6 +33,9 @@ namespace com.surfm.rest {
             }
 
 
+            public override string ToString() {
+                return JsonConvert.SerializeObject(this);
+            }
 
         }
 
@@ -81,6 +84,7 @@ namespace com.surfm.rest {
             public OnFinishedHandler(Action<Result> cb) { callback = cb; }
 
             public void onFinished(HTTPRequest req, HTTPResponse resp) {
+                Debug.Log("onFinished");
                 // Increase the finished count regardless of the state of our request
                 string msg = "";
                 switch (req.State) {
@@ -148,7 +152,11 @@ namespace com.surfm.rest {
 
         public string getUrl(string urlorPath) {
             if (host != null && host.Length > 0) {
-                return "http://" + host + ":" + port + "/" + urlorPath;
+                if (string.IsNullOrEmpty(port)) {
+                    return "http://" + host  + "/" + urlorPath;
+                } else {
+                    return "http://" + host + ":" + port + "/" + urlorPath;
+                }
             } else {
                 return urlorPath;
             }
@@ -156,6 +164,7 @@ namespace com.surfm.rest {
 
         public int postJson(string url, object data, Action<Result> cb) {
             Uri u = new Uri(getUrl(url));
+            Debug.Log("postJson = " + u);
             HTTPRequest hr = new HTTPRequest(u, HTTPMethods.Post);
             if (data != null) {
                 string ourPostData = JsonConvert.SerializeObject(data);
