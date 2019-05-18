@@ -32,6 +32,10 @@ namespace com.surfm.rest {
                 return this;
             }
 
+            public  T getBody<T>() {
+                return JsonConvert.DeserializeObject<T>(response.DataAsText);
+            }
+
 
             public override string ToString() {
                 return JsonConvert.SerializeObject(this);
@@ -39,7 +43,9 @@ namespace com.surfm.rest {
 
         }
 
-       
+
+
+
 
         public string host;
         public string port;
