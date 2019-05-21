@@ -44,15 +44,12 @@ namespace com.surfm.rest {
         }
 
 
-
-
-
         public string host;
         public string port;
         public float timeOut = 5f;
         private int genId;
         private Dictionary<int, RequestBundle> map = new Dictionary<int, RequestBundle>();
-        public string authorization;
+        public Func<string> authorizationFunc = ()=> { return ""; };
 
 
 
@@ -64,6 +61,10 @@ namespace com.surfm.rest {
                 rb.www.Dispose();
             }
             map.Clear();
+        }
+
+        public int get<T>(string url, Action<TypeResult<T>> cb) {
+            return get(url , r=> { cb(new TypeResult<T>(r)); });
         }
 
         public int get(string url, Action<Result> cb) {
@@ -168,6 +169,10 @@ namespace com.surfm.rest {
             }
         }
 
+        public int postJson<T>(string url, object data, Action<TypeResult<T>> cb) {
+            return postJson(url,data,r=> { cb( new TypeResult<T>(r) );  });
+        }
+
         public int postJson(string url, object data, Action<Result> cb) {
             Uri u = new Uri(getUrl(url));
             Debug.Log("postJson = " + u);
@@ -185,8 +190,9 @@ namespace com.surfm.rest {
         private void setupHeaders(HTTPRequest hr) {
             hr.AddHeader("charset", "utf-8");
             hr.AddHeader("Content-Type", "application/json");
-            if (!string.IsNullOrEmpty(authorization)) {
-                hr.AddHeader("Authorization", authorization);
+            string auth = authorizationFunc();
+            if (!string.IsNullOrWhiteSpace(auth)) {
+                hr.AddHeader("Authorization", auth);
             }
         }
 
