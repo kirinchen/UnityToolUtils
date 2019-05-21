@@ -8,7 +8,9 @@ namespace surfm.tool {
     public class BeansRepo  {
 
         private static BeansRepo instance;
-        public delegate object FindFunc(Type t, string name);
+        public interface FindFunc {
+            object findBean(Type t, string name);
+        } 
         private FindFunc findFunc;
 
         private Dictionary<Type, Dictionary<string, Bean>> map = new Dictionary<Type, Dictionary<string, Bean>>();
@@ -25,9 +27,14 @@ namespace surfm.tool {
         }
 
         private void addOne(Beans.Bean b) {
+            addOne(b,false);
+        }
+
+        internal void addOne(Beans.Bean b,bool fouceAdd) {
             if (!map.ContainsKey(b.returnType)) {
                 map.Add(b.returnType, new Dictionary<string, Beans.Bean>());
             }
+            if (fouceAdd && map[b.returnType].ContainsKey(b.name)) map[b.returnType].Remove(b.name);
             map[b.returnType].Add(b.name,b);
         }
 
@@ -40,10 +47,11 @@ namespace surfm.tool {
                 Dictionary<string, Bean> beanMap = map[t];
                 if (beanMap.ContainsKey(name)) {
                     Bean b = beanMap[name];
-                    return b.getBean<T>();
+                    T ans = b.getBean<T>();
+                    if (ans != null) return ans;
                 }
             }
-            if (findFunc != null) return (T)findFunc(t,name);
+            if (findFunc != null) return (T)findFunc.findBean(t,name);
             throw new NullReferenceException("not find this bean t="+t+" name="+name);
         }
 
