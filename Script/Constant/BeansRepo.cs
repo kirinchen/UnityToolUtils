@@ -59,6 +59,10 @@ namespace surfm.tool {
             return getInstance()._bean<T>(t,name);
         }
 
+        public static object bean(Type t, string name = BeanAttribute.DEFAULT) {
+            return getInstance()._bean<object>(t, name);
+        }
+
 
         public static BeansRepo getInstance() {
             if (instance == null) {
