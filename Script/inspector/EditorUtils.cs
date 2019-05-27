@@ -5,6 +5,9 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+
 namespace surfm.tool {
     public class EditorUtils {
 
@@ -54,3 +57,4 @@ namespace surfm.tool {
 
     }
 }
+#endif
