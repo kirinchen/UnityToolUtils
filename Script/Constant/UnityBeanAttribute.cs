@@ -7,5 +7,6 @@ namespace surfm.tool {
         public string name = BeanAttribute.DEFAULT;
         public bool cache = true;
 
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using surfm.dreamon;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static surfm.tool.BeansRepo;
@@ -26,7 +27,10 @@ namespace surfm.tool {
             if (t.IsInterface) {
                 MonoBehaviour[] oss = UnityEngine.Object.FindObjectsOfType<MonoBehaviour>();
                 foreach (MonoBehaviour mb in oss) {
-                    if (mb.GetType().IsAssignableFrom(t)) {
+                    if (mb is TDSTKCustomFix) {
+                        Debug.Log("debug");
+                    }
+                    if (mb.GetType().GetInterface(t.Name) == t) {
                         ans.Add(mb);
                     }
                 }
