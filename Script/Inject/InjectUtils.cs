@@ -31,6 +31,7 @@ namespace surfm.tool {
                 MonoBehaviour mo = (MonoBehaviour)o;
                 if (ia.type == InjectAttribute.Type.getcomponent) return mo.GetComponent(f.FieldType);
                 if (ia.type == InjectAttribute.Type.getcomponentinchildren) return mo.GetComponentInChildren(f.FieldType);
+                if (ia.type == InjectAttribute.Type.getComponentInParent) return mo.GetComponentInParent(f.FieldType);
                 throw new System.Exception("this not Support this type=" + ia.type);
             }
         }
