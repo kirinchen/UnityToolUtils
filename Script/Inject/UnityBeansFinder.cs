@@ -10,8 +10,8 @@ namespace surfm.tool {
             foreach (UnityEngine.Object o in os) {
                 CheckBD checkBD = check(o, name);
                 if (checkBD.yes) {
-                    if (checkBD.unityBean.cache) {
-                        saveBean(o, checkBD.unityBean);
+                    if (checkBD.cache) {
+                        saveBean(o, name);
                     }
 
                     return o;
@@ -37,10 +37,10 @@ namespace surfm.tool {
         }
 
 
-        private void saveBean(UnityEngine.Object o, UnityBeanAttribute unityBean) {
+        private void saveBean(UnityEngine.Object o,string name) {
             Beans.Bean b = new Beans.Bean();
             b.instanced = true;
-            b.name = unityBean.name;
+            b.name = name;
             b.returnType = o.GetType();
             b.beanInstance = o;
             BeansRepo.getInstance().addOne(b,true);
@@ -48,14 +48,14 @@ namespace surfm.tool {
 
         public struct CheckBD {
             public bool yes;
-            public UnityBeanAttribute unityBean;
+            public bool cache;
         }
 
         private CheckBD check(UnityEngine.Object o,string name) {
             Type ot = o.GetType();
             UnityBeanAttribute uba = (UnityBeanAttribute)Attribute.GetCustomAttribute(ot, typeof(UnityBeanAttribute));
-            if (uba == null) return new CheckBD { yes = false  };
-            if (string.Equals(name, uba.name)) return new CheckBD { yes = true, unityBean = uba };
+            if (uba == null && BeanAttribute.DEFAULT.Equals(name)) return new CheckBD { yes = true ,cache = false };
+            if (string.Equals(name, uba.name)) return new CheckBD { yes = true, cache = uba.cache };
             return new CheckBD { yes = false };
         }
 
