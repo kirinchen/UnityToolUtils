@@ -9,7 +9,7 @@ namespace surfm.tool {
 
         public static void inject(object o) {
             FieldInfo[] fields = o.GetType().GetFields(
-                         BindingFlags.NonPublic |
+                         BindingFlags.NonPublic | BindingFlags.Public |
                          BindingFlags.Instance);
             for (int i = 0; i < fields.Length; i++) {
                 injectField(o, fields[i]);
