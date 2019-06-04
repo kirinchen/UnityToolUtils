@@ -17,6 +17,8 @@ namespace surfm.dreamon {
             }
             if (stop) return;
 
+            if (!Input.GetMouseButtonUp(0)) return;
+
             RaycastHit hit;
             mouseRaycast(Input.mousePosition, out hit);
             Instantiate(prefab, hit.point, Quaternion.identity);
