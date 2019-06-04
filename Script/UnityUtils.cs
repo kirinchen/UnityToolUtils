@@ -144,6 +144,12 @@ namespace surfm.tool {
         }
 
 
+        public static bool mouseRaycast(Vector3 mousePos, int layerId , out RaycastHit hit) {
+            LayerMask mask = 1 << layerId;
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            return (Physics.Raycast(ray, out hit, Mathf.Infinity, mask));
+        }
+
 
     }
 }
