@@ -69,6 +69,7 @@ namespace com.surfm.rest {
 
         public int get(string url, Action<Result> cb) {
             Uri u = new Uri(getUrl(url));
+            Debug.Log("get = " + u);
             HTTPRequest hr = new HTTPRequest(u, HTTPMethods.Get);
             return runWWWW(hr, cb);
         }
