@@ -97,18 +97,6 @@ namespace surfm.tool {
                     throw new Exception("not suppot ty=" + objectType);
                 }
 
-                if (objectType == typeof(ObscuredInt)) {
-                    ObscuredInt value = Convert.ToInt32(reader.Value);
-                    return value;
-                } else if (objectType == typeof(ObscuredBool)) {
-                    ObscuredBool value = Convert.ToBoolean(reader.Value);
-                    return value;
-                } else if (objectType == typeof(ObscuredFloat)) {
-                    ObscuredFloat value = Convert.ToSingle(reader.Value);
-                    return value;
-                } else {
-                    Debug.LogError("Code not implemented yet!");
-                }
             }
             return null;
         }
