@@ -8,9 +8,8 @@ namespace surfm.tool {
 
         public static ObjectPools instance { get; private set; }
 
+        public List<Listener> listeners { get; private set; } = new List<Listener>();
         private List<Pool> pools = new List<Pool>();
-
-
 
         void Awake() {
             instance = this;
@@ -25,15 +24,11 @@ namespace surfm.tool {
                 Debug.Log("NullReferenceException: obj unspecified");
                 return null;
             }
-
             int ID = getPoolIdx(obj);
-
             if (ID == -1) ID = newOrGetPool(obj);
-
             GameObject spawnedObj = pools[ID].Spawn(pos, rot);
-
+            listeners.ForEach(l=> l.onSpawn(spawnedObj));
             if (activeDuration > 0) unspawn(spawnedObj,activeDuration);
-
             return spawnedObj;
         }
 
@@ -45,6 +40,7 @@ namespace surfm.tool {
         }
 
         public void unspawn(GameObject obj) {
+            listeners.ForEach(l => l.onUnSpawn(obj));
             for (int i = 0; i < pools.Count; i++) {
                 if (pools[i].Unspawn(obj)) return;
             }
@@ -150,6 +146,10 @@ namespace surfm.tool {
         }
 
 
+        public interface Listener {
+            void onSpawn(GameObject newspawnedObj);
+            void onUnSpawn(GameObject newspawnedObj);
+        }
 
 
     }
