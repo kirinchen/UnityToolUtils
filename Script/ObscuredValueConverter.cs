@@ -8,6 +8,8 @@ using UnityEngine;
 namespace surfm.tool {
     public class ObscuredValueConverter : JsonConverter {
 
+        public static readonly ObscuredValueConverter DEFAULT = new ObscuredValueConverter();
+
         public struct Conv {
             //public Type objType;
             //public Type obscuredType;

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using UnityEngine;
 
 
@@ -17,10 +18,21 @@ namespace surfm.tool {
         }
 
         private static void injectField(object obj, FieldInfo f) {
+            ValueAttribute va = f.GetCustomAttribute<ValueAttribute>();
+            if (va != null) {
+                setupValue(va,obj,f);
+                return;
+            }
+
             InjectAttribute ia = f.GetCustomAttribute<InjectAttribute>();
             if (ia == null) return;
             object ino = findObj(obj, f, ia);
             f.SetValue(obj, ino);
+        }
+
+        private static void setupValue(ValueAttribute va, object obj, FieldInfo f) {
+            object val = ConstantRepo.getInstance().get(va.name);
+            f.SetValue(obj, val);
         }
 
         private static object findObj(object o, FieldInfo f, InjectAttribute ia) {

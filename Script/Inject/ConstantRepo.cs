@@ -34,6 +34,10 @@ namespace surfm.tool {
             return (T)map[k];
         }
 
+        public object get(string k) {
+            return map[k];
+        }
+
         public static ConstantRepo getInstance() {
             if (instance == null) {
                 instance = new ConstantRepo();

@@ -12,8 +12,8 @@ namespace surfm.tool {
             public enum ValType {
                 _string, _float, _vector3, _sprite,_bool
             }
-            public ValType valType;
             public string key;
+            public ValType valType;
             public string _stringVal;
             public float _floatVal;
             public Vector3 _vector3Val;
