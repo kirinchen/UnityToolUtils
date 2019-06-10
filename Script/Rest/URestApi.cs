@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using System.Text;
 using BestHTTP;
+using surfm.tool;
 
 namespace com.surfm.rest {
     public class URestApi :MonoBehaviour  {
@@ -33,12 +34,12 @@ namespace com.surfm.rest {
             }
 
             public  T getBody<T>() {
-                return JsonConvert.DeserializeObject<T>(response.DataAsText);
+                return JsonConvert.DeserializeObject<T>(response.DataAsText, ObscuredValueConverter.DEFAULT);
             }
 
 
             public override string ToString() {
-                return JsonConvert.SerializeObject(this);
+                return JsonConvert.SerializeObject(this, ObscuredValueConverter.DEFAULT);
             }
 
         }
@@ -179,7 +180,7 @@ namespace com.surfm.rest {
             Debug.Log("postJson = " + u);
             HTTPRequest hr = new HTTPRequest(u, HTTPMethods.Post);
             if (data != null) {
-                string ourPostData = JsonConvert.SerializeObject(data);
+                string ourPostData = JsonConvert.SerializeObject(data, ObscuredValueConverter.DEFAULT);
                 byte[] pData = Encoding.ASCII.GetBytes(ourPostData.ToCharArray());
                 hr.RawData = pData;
             }

@@ -23,7 +23,7 @@ namespace surfm.tool {
             popupList(title, l, inout);
         }
 
-        public static void popupList(string title, List<string> l, Func<string, string> inout, GUIStyle style = null) {
+        public static int popupList(string title, List<string> l, Func<string, string> inout, GUIStyle style = null) {
             int idx = -1;
             string enumName = inout(null);
             if (!string.IsNullOrEmpty(enumName) && l.Contains(enumName)) {
@@ -37,6 +37,7 @@ namespace surfm.tool {
             if (idx >= 0) {
                 inout(l[idx]);
             }
+            return idx;
 
         }
 
