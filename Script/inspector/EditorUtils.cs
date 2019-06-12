@@ -54,8 +54,28 @@ namespace surfm.tool {
             return prop.serializedObject.FindProperty(prentPath);
         }
 
-        
-
+        public static object draw(string lan, object obj) {
+            
+            if (obj.GetType() == typeof(int)) {
+                return  EditorGUILayout.IntField(lan, (int)obj);
+            }
+            if (obj.GetType() == typeof(float)) {
+                return EditorGUILayout.FloatField(lan, (float)obj);
+            }
+            if (obj.GetType() == typeof(string)) {
+                return EditorGUILayout.TextField(lan, obj.ToString());
+            }
+            if (obj.GetType() == typeof(bool)) {
+                return EditorGUILayout.Toggle(lan, Convert.ToBoolean(obj));
+            }
+            if (obj.GetType().IsEnum) {
+                string[] ns= Enum.GetNames(obj.GetType());
+                int idx = ns.ToList().FindIndex(e => e.Equals(obj.ToString()) );
+                idx = EditorGUILayout.Popup(lan, idx, ns);
+                return Enum.Parse(obj.GetType(),ns[idx]);
+            }
+            return null;
+        }
     }
 }
 #endif
