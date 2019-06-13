@@ -30,8 +30,9 @@ namespace surfm.tool {
             return ans;
         }
 
- 
-
+        internal void crear() {
+            map.Clear();
+        }
     }
 
 
