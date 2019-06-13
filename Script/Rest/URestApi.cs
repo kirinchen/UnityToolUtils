@@ -181,7 +181,7 @@ namespace com.surfm.rest {
             HTTPRequest hr = new HTTPRequest(u, HTTPMethods.Post);
             if (data != null) {
                 string ourPostData = JsonConvert.SerializeObject(data, ObscuredValueConverter.DEFAULT);
-                byte[] pData = Encoding.ASCII.GetBytes(ourPostData.ToCharArray());
+                byte[] pData = Encoding.UTF8.GetBytes(ourPostData.ToCharArray());
                 hr.RawData = pData;
             }
             return runWWWW(hr, cb);
