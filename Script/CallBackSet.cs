@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace surfm.tool {
 
     public class CallBackSet<E, F, R> where E : Enum {
+
+        public Dictionary<E, object> tarMap = new Dictionary<E, object>();
         public Dictionary<E, F> map = new Dictionary<E, F>();
         public Func<F, R, CBResult<R>> customFunc;
 
@@ -12,8 +15,9 @@ namespace surfm.tool {
             customFunc = f;
         }
 
-        public void add(E e, F f) {
+        public void add(E e, F f ,object o = null) {
             map.Add(e, f);
+            tarMap.Add(e,o);
         }
 
         public R apply(R _default) {
@@ -30,8 +34,19 @@ namespace surfm.tool {
             return ans;
         }
 
-        internal void crear() {
+        public void clear() {
             map.Clear();
+            tarMap.Clear();
+        }
+
+        public void removeAll(Func<E,object,bool> checkF) {
+            List<E> removedKeys= tarMap.Keys.ToList().FindAll(k => checkF(k, tarMap[k]));
+            removedKeys.FindAll(k => tarMap.Remove(k) );
+            removedKeys.FindAll(k => map.Remove(k));
+        }
+
+        public int size() {
+            return map.Count;
         }
     }
 
@@ -40,6 +55,13 @@ namespace surfm.tool {
         public delegate bool BoolFunc();
         public delegate string StringFunc(string ins);
 
+        public static CBResult<object>  action(Action arg1, object arg2) {
+            arg1();
+            return new CBResult<object>() {
+                breakloop = false,
+                ans = arg2
+            };
+        }
 
         public static CBResult<bool> boolPositive(BoolFunc f, bool arg2) {
             bool b = f();
