@@ -38,6 +38,11 @@ namespace surfm.tool {
             return map[k];
         }
 
+        public void clean() {
+            map.Clear();
+            instance = null;
+        }
+
         public static ConstantRepo getInstance() {
             if (instance == null) {
                 instance = new ConstantRepo();
