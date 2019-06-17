@@ -11,22 +11,18 @@ namespace surfm.tool {
             cam = c;
         }
 
-        public Rect getPlaneRect(int maskIdx) {
-            Vector3 rb;
-            if (!getPlanePoint(out rb, cr.max, maskIdx)) return new Rect();
-            Vector3 lt;
-            if (!getPlanePoint(out lt, cr.min, maskIdx)) return new Rect();
-            Vector3 c = (lt + rb) / 2;
-            Vector2 c2 = new Vector2(c.x, c.z);
-            Vector3 size = rb - lt;
-            Vector2 size2 = new Vector2(size.x, size.y);
-            return new Rect(c2, size2);
 
+        public ViewPortVertex getViewPortVertex(int maskIdx) {
+            ViewPortVertex ans = new ViewPortVertex();
+            ans.lt = getPlanePoint(cr.min, maskIdx);
+            ans.lb = getPlanePoint(cr.min+new Vector2(0,cr.height), maskIdx);
+            ans.rt = getPlanePoint(cr.min + new Vector2(cr.width, 0), maskIdx);
+            ans.rb = getPlanePoint(cr.max, maskIdx);
+            return ans;
         }
 
 
-
-        public bool getPlanePoint(out Vector3 _point, Vector3 v, int maskIdx) {
+        public PointInfo getPlanePoint( Vector3 v, int maskIdx) {
             RaycastHit hit;
             Camera cm = Camera.main;
             Rect cr = cm.rect;
@@ -35,12 +31,28 @@ namespace surfm.tool {
             if (Physics.Raycast(ray, out hit, 99999, mask)) {
                 // Transform objectHit = hit.transform;
                 // Debug.DrawRay(hit.point, ray.direction * 10, Color.yellow);
-                _point = hit.point;
-                // Do something with the object that was hit by the raycast.
-                return true;
+                return new PointInfo() {
+                    goted = true,
+                    point = hit.point
+                };
             }
-            _point = Vector3.zero;
-            return false;
+            return new PointInfo() {
+                goted = false
+            };
+        }
+
+        public class ViewPortVertex {
+            public PointInfo lt, lb, rt, rb;
+
+            public PointInfo[] getPoints() {
+                return new PointInfo[] { lt, lb, rt, rb };
+            }
+
+        }
+
+        public struct PointInfo {
+            public Vector3 point;
+            public bool goted;
         }
 
 
