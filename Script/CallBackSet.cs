@@ -7,28 +7,34 @@ namespace surfm.tool {
 
     public class CallBackSet<E, F, R> where E : Enum {
 
-        public Dictionary<E, object> tarMap = new Dictionary<E, object>();
-        public Dictionary<E, F> map = new Dictionary<E, F>();
+        public Dictionary<F, object> tarMap = new Dictionary<F, object>();
+        public Dictionary<E, SortF> map = new Dictionary<E, SortF>();
         public Func<F, R, CBResult<R>> customFunc;
 
         public CallBackSet(Func<F, R, CBResult<R>> f) {
             customFunc = f;
         }
 
-        public void add(E e, F f ,object o = null) {
-            map.Add(e, f);
-            tarMap.Add(e,o);
+        public void add(E e, F f ,int idx = 0,object o = null) {
+            if (!map.ContainsKey(e)) {
+                map.Add(e, new SortF());
+            }
+            SortF sortF =  map[e] ;
+            sortF.add(f,idx);
+            tarMap.Add(f,o);
         }
 
         public R apply(R _default) {
             R ans = _default;
             foreach (E e in Enum.GetValues(typeof(E))) {
                 if (!map.ContainsKey(e)) continue;
-                F f = map[e];
-                CBResult<R> cr = customFunc(f, ans);
-                ans = cr.ans;
-                if (cr.breakloop) {
-                    break;
+                SortF sortF = map[e];
+                foreach (F f in sortF.list) {
+                    CBResult<R> cr = customFunc(f, ans);
+                    if (cr.breakloop) {
+                        return cr.ans;
+                    }
+                    ans = cr.ans;
                 }
             }
             return ans;
@@ -39,15 +45,47 @@ namespace surfm.tool {
             tarMap.Clear();
         }
 
-        public void removeAll(Func<E,object,bool> checkF) {
-            List<E> removedKeys= tarMap.Keys.ToList().FindAll(k => checkF(k, tarMap[k]));
-            removedKeys.FindAll(k => tarMap.Remove(k) );
-            removedKeys.FindAll(k => map.Remove(k));
+        public void removeAll(Func<object,bool> checkF) {
+            foreach (SortF sortF in map.Values) {
+                List<F> removeF = sortF.list.FindAll(f => checkF(tarMap[f]));
+                removeF.ForEach(f=> tarMap.Remove(f));
+                removeF.ForEach(f => sortF.remove(f));
+            }
         }
 
         public int size() {
             return map.Count;
         }
+
+
+        public class SortF {
+            private Dictionary<F, int> map = new Dictionary<F, int>();
+            public List<F> list { get; private set; } = new List<F>();
+
+            public void add(F msf, int idx = 0) {
+                if (!map.ContainsKey(msf)) {
+                    map.Add(msf, idx);
+                    sortFuncs();
+                }
+            }
+
+            internal void remove(F f) {
+                list.Remove(f);
+                map.Remove(f);
+            }
+
+            private void sortFuncs() {
+                list = new List<F>(map.Keys);
+                list.Sort((a, b) => {
+                    int aI = map[a];
+                    int bI = map[b];
+                    return aI.CompareTo(bI);
+                });
+            }
+
+
+        }
+
     }
 
 

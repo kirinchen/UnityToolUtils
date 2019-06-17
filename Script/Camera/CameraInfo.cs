@@ -2,7 +2,7 @@
 
 namespace surfm.tool {
     public class CameraInfo {
-        private Camera cam;
+        public Camera cam { get; private set; }
         public Rect cr { get { return cam.rect; } }
         //private Vector2 leftTop { get { return new Vector2(cr.xMin + cr.center.x, cr.yMin + cr.center.y); } }
         //private Vector2 rightBottom { get { return new Vector2(cr.xMax + cr.center.x, cr.yMax + cr.center.y); } }
