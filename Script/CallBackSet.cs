@@ -7,22 +7,26 @@ namespace surfm.tool {
 
     public class CallBackSet<E, F, R> where E : Enum {
 
-        public Dictionary<F, object> tarMap = new Dictionary<F, object>();
-        public Dictionary<E, SortF> map = new Dictionary<E, SortF>();
-        public Func<F, R, CBResult<R>> customFunc;
+        private Dictionary<F, object> tarMap = new Dictionary<F, object>();
+        private Dictionary<E, SortF> map = new Dictionary<E, SortF>();
+        private Func<F, R, CBResult<R>> customFunc;
 
         public CallBackSet(Func<F, R, CBResult<R>> f) {
             customFunc = f;
         }
 
-        public void add(E e, F f ,int idx = 0,object o = null) {
+
+        public void add(E e, F f ,int idx ,object o ) {
+            if (tarMap.ContainsKey(f)) return;
             if (!map.ContainsKey(e)) {
                 map.Add(e, new SortF());
             }
             SortF sortF =  map[e] ;
-            sortF.add(f,idx);
             tarMap.Add(f,o);
+            sortF.add(f,idx);
         }
+
+
 
         public R apply(R _default) {
             R ans = _default;
