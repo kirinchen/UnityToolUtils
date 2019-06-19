@@ -55,8 +55,8 @@ namespace surfm.tool {
             throw new NullReferenceException("not find this bean t="+t+" name="+name);
         }
 
-        public static T bean<T>(Type t, string name = BeanAttribute.DEFAULT) {
-            return getInstance()._bean<T>(t,name);
+        public static T bean<T>( string name = BeanAttribute.DEFAULT) {
+            return getInstance()._bean<T>(typeof(T),name);
         }
 
         public static object bean(Type t, string name = BeanAttribute.DEFAULT) {
