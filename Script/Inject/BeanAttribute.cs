@@ -7,7 +7,7 @@ namespace surfm.tool {
         public  const string DEFAULT = "@DEFAULT@";
 
         public string name = DEFAULT;
-        public bool instanced = true;
+        public bool instanced = false;
 
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static surfm.tool.Beans;
 
 namespace surfm.tool {
-    public class BeansRepo  {
+    public class BeansRepo {
 
         private static BeansRepo instance;
         public interface FindFunc {
             object findBean(Type t, string name);
-        } 
+        }
         private FindFunc findFunc;
 
         private Dictionary<Type, Dictionary<string, Bean>> map = new Dictionary<Type, Dictionary<string, Bean>>();
@@ -27,15 +26,15 @@ namespace surfm.tool {
         }
 
         private void addOne(Beans.Bean b) {
-            addOne(b,false);
+            addOne(b, false);
         }
 
-        internal void addOne(Beans.Bean b,bool fouceAdd) {
+        internal void addOne(Beans.Bean b, bool fouceAdd) {
             if (!map.ContainsKey(b.returnType)) {
                 map.Add(b.returnType, new Dictionary<string, Beans.Bean>());
             }
             if (fouceAdd && map[b.returnType].ContainsKey(b.name)) map[b.returnType].Remove(b.name);
-            map[b.returnType].Add(b.name,b);
+            map[b.returnType].Add(b.name, b);
         }
 
         public void setFindFunc(FindFunc f) {
@@ -51,12 +50,12 @@ namespace surfm.tool {
                     if (ans != null) return ans;
                 }
             }
-            if (findFunc != null) return (T)findFunc.findBean(t,name);
-            throw new NullReferenceException("not find this bean t="+t+" name="+name);
+            if (findFunc != null) return (T)findFunc.findBean(t, name);
+            throw new NullReferenceException("not find this bean t=" + t + " name=" + name);
         }
 
-        public static T bean<T>( string name = BeanAttribute.DEFAULT) {
-            return getInstance()._bean<T>(typeof(T),name);
+        public static T bean<T>(string name = BeanAttribute.DEFAULT) {
+            return getInstance()._bean<T>(typeof(T), name);
         }
 
         public static object bean(Type t, string name = BeanAttribute.DEFAULT) {
@@ -64,8 +63,12 @@ namespace surfm.tool {
         }
 
 
+        private static bool _debug_recursively = false;
         public static BeansRepo getInstance() {
+
             if (instance == null) {
+                if (_debug_recursively) throw new System.Exception("_debug_recursively");
+                _debug_recursively = true;
                 instance = new BeansRepo();
             }
             return instance;
