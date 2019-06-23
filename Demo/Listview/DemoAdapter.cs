@@ -1,49 +1,83 @@
-﻿# if ListViewAdapter
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace surfm.tool.demo {
-    public class DemoAdapter : BaseAdapter {
+namespace surfm.tool.test {
 
-        public List<string> data = new List<string>();
+    public class DemoAdapter : BaseAdapter<SampleObjectModel, MyItemViewsHolder> {
 
-        public DemoAdapter() {
-            for (int i = 0; i < 999; i++) {
-                data.Add("AA " + i);
+        private RectTransform itemPrefab;
+        private List<SampleObjectModel> data = new List<SampleObjectModel>();
+
+        public DemoAdapter( RectTransform rt) {
+            itemPrefab = rt;
+            for (int i=0;i<100;i++) {
+                data.Add(new SampleObjectModel(i+"."));
             }
         }
 
-        public override int getCount() {
-            return data.Count;
+        public MyItemViewsHolder createViewsHolder(BaseParams _Params, int itemIndex) {
+            var instance = new MyItemViewsHolder();
+            instance.Init(itemPrefab, itemIndex);
+
+            return instance;
         }
 
-        public override List<object> listData() {
-            return data.ConvertAll(o => { return (object)o; });
+        public List<SampleObjectModel> getData() {
+            return data;
         }
 
-        internal override ItemHolder genHolder(object d, int itemIndex) {
-            return new Holder();
+        public Rect getRect() {
+            return itemPrefab.rect;
         }
 
-        public class Holder : ItemHolder {
-
-            public Text text;
-
-            public override Type getKeyType() {
-                return typeof(string);
-            }
-
-            internal override void injectViews(RectTransform root) {
-                text = root.Find("Text").GetComponent<Text>();
-            }
-
-            internal override void UpdateViews(object model) {
-                text.text = (string)model;
-            }
+        public void updateViewsHolder(SampleObjectModel dataModel, MyItemViewsHolder newOrRecycled, int itemIndex) {
+            newOrRecycled.objectTitle.text = dataModel.objectName;
+            newOrRecycled.a.color = dataModel.aColor;
+            newOrRecycled.b.color = dataModel.bColor;
+            newOrRecycled.c.color = dataModel.cColor;
+            newOrRecycled.d.color = dataModel.dColor;
+            newOrRecycled.e.color = dataModel.eColor;
         }
     }
+
+
+    public class SampleObjectModel {
+        public string objectName;
+        public Color aColor, bColor, cColor, dColor, eColor;
+        public bool expanded;
+
+        public SampleObjectModel(string name) {
+            objectName = name;
+            aColor = GetRandomColor();
+            bColor = GetRandomColor();
+            cColor = GetRandomColor();
+            dColor = GetRandomColor();
+            eColor = GetRandomColor();
+        }
+
+        Color GetRandomColor() {
+            return new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        }
+    }
+
+    public sealed class MyItemViewsHolder : BaseItemViewsHolder {
+        public Text objectTitle;
+        public Image a, b, c, d, e;
+
+        public override void CollectViews() {
+            base.CollectViews();
+
+            a = root.GetChild(0).GetChild(0).GetComponent<Image>();
+            b = root.GetChild(0).GetChild(1).GetComponent<Image>();
+            c = root.GetChild(0).GetChild(2).GetComponent<Image>();
+            d = root.GetChild(0).GetChild(3).GetComponent<Image>();
+            e = root.GetChild(0).GetChild(4).GetComponent<Image>();
+
+            objectTitle = root.GetChild(0).GetChild(5).GetComponentInChildren<Text>();
+
+        }
+    }
+
 }
-#endif
