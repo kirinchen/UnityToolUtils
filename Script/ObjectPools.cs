@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace surfm.tool {
@@ -33,14 +34,20 @@ namespace surfm.tool {
         }
 
 
-        public void unspawn(GameObject obj, float delay) {
+        public void unspawn(GameObject obj, float delay,Action cb = null) {
             UnityUtils.delay(this,()=> {
                 unspawn(obj);
+                cb?.Invoke();
             },delay);
         }
 
         public void unspawn(GameObject obj) {
+            PoolChild[] pcs = obj.GetComponentsInChildren<PoolChild>();
+            foreach (PoolChild pc in pcs) {
+                pc.onUnspawn();
+            }
             obj.SendMessage("OnUnspawn", SendMessageOptions.DontRequireReceiver);
+            
             listeners.ForEach(l => l.onUnSpawn(obj));
             for (int i = 0; i < pools.Count; i++) {
                 if (pools[i].Unspawn(obj)) return;

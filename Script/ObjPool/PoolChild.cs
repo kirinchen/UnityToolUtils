@@ -8,9 +8,10 @@ namespace surfm.tool {
         public TriggerEvent triggerEvent;
         public bool destroyMe = true;
 
-        void OnUnspawn() {
+        public void onUnspawn() {
+            Debug.Log("OnUnspawn");
             triggerEvent.invoke();
-            if (destroyMe) ObjectPools.instance.unspawn(gameObject);
+            if (destroyMe) Destroy(gameObject);
         }
 
     }
