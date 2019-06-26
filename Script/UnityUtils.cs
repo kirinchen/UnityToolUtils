@@ -150,6 +150,14 @@ namespace surfm.tool {
             return (Physics.Raycast(ray, out hit, Mathf.Infinity, mask));
         }
 
+        public static RaycastHit[] castCapsuleByCollider(Vector3 pos, CapsuleCollider col, int layerMask) {
+            float disP = col.height / 2 - col.radius;
+            Vector3 p1 = pos + col.center + Vector3.up * disP;
+            Vector3 p2 = pos + col.center - Vector3.up * disP;
+            float r = col.radius * 0.99f;
+            float castD = 1f;
+            return Physics.CapsuleCastAll(p1, p2, r, new Vector3(0.001f, 0.001f, 0.001f), castD, layerMask);
+        }
 
     }
 }
