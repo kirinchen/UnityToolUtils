@@ -143,13 +143,11 @@ namespace surfm.tool {
 
             // Remember, only GetItemHeight (for vertical scroll) or GetItemWidth (for horizontal scroll) will be called
             protected override float GetItemHeight(int index) {
-                Debug.Log("GetItemHeight:" + _PrefabSize);
                 return _PrefabSize;
             }
 
             // Remember, only GetItemHeight (for vertical scroll) or GetItemWidth (for horizontal scroll) will be called
             protected override float GetItemWidth(int index) {
-                Debug.Log("GetItemWidth:" + _PrefabSize);
                 return _PrefabSize;
             }
 
