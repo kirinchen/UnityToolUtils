@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -147,6 +148,11 @@ namespace surfm.tool {
                 return m.Result("$1");
 
             return string.Empty;
+        }
+
+        public static object convert(object source,Type type) {
+            string json= JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.DeserializeObject(json,type, ObscuredValueConverter.DEFAULT);
         }
 
     }
