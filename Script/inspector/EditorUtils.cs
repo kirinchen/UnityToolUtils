@@ -54,6 +54,15 @@ namespace surfm.tool {
             return prop.serializedObject.FindProperty(prentPath);
         }
 
+        public static bool isSpecDraw(Type t) {
+            if (t == typeof(int)) return true;
+            if (t == typeof(float)) return true;
+            if (t == typeof(string)) return true;
+            if (t == typeof(bool)) return true;
+            if (t.IsEnum) return true;
+            return false;
+        }
+
         public static object draw(string lan, object obj) {
             
             if (obj.GetType() == typeof(int)) {
