@@ -155,6 +155,11 @@ namespace surfm.tool {
             return JsonConvert.DeserializeObject(json,type, ObscuredValueConverter.DEFAULT);
         }
 
+        public static E optMap<T, E>(Dictionary<T, E> map, T key,E _de = default) {
+            if (map.ContainsKey(key)) return map[key];
+            return _de;
+        }
+
     }
 
 
