@@ -87,6 +87,12 @@ namespace surfm.tool {
             return null;
         }
 
+        public static string getFieldName(FieldInfo fi) {
+            TooltipAttribute t = fi.GetCustomAttribute<TooltipAttribute>();
+            if (t == null) return fi.Name;
+            return t.tooltip;
+        }
+
 
     }
 
