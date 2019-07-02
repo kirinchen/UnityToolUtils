@@ -119,7 +119,7 @@ namespace surfm.tool {
         }
 
 
-        public static T copyComponent<T>(Component comp, T other) where T : Component {
+        public static Component copyComponent(Component comp, Component other)  {
             Type type = comp.GetType();
             if (type != other.GetType()) return null; // type mis-match
             BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default | BindingFlags.DeclaredOnly;
@@ -135,11 +135,11 @@ namespace surfm.tool {
             foreach (var finfo in finfos) {
                 finfo.SetValue(comp, finfo.GetValue(other));
             }
-            return comp as T;
+            return comp ;
         }
 
-        public static T addComponent<T>( GameObject go, T toAdd) where T : Component {
-            T n= go.AddComponent<T>();
+        public static Component addComponent( GameObject go, Component toAdd)  {
+            Component n = go.AddComponent(toAdd.GetType());
             return copyComponent(n, toAdd);
         }
 
