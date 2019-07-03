@@ -36,7 +36,7 @@ namespace surfm.tool {
         public object toObscured(object o) {
             Conv conv = list.Values.ToList().Find(c => o.GetType() == c.blunt);
             if (conv != null) {
-                return list[o.GetType()].ObjToObscured(o);
+                return conv.ObjToObscured(o);
             }
             return o;
         }
