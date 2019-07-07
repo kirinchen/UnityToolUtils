@@ -12,7 +12,7 @@ namespace surfm.tool {
         internal abstract void refleshTile(D d, E e, int idx);
         public Transform parent;
 
-        public void Awake() {
+        public virtual void Awake() {
             if (parent == null) {
                 parent = transform;
             }
