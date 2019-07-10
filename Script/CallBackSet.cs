@@ -26,6 +26,12 @@ namespace surfm.tool {
             sortF.add(f,idx);
         }
 
+        public void remove(E e, F f) {
+            if (!tarMap.ContainsKey(f)) return;
+            tarMap.Remove(f);
+            map[e].remove(f);
+        }
+
 
 
         public R apply(R _default) {
