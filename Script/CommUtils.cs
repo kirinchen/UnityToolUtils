@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -158,6 +160,12 @@ namespace surfm.tool {
         public static E optMap<T, E>(Dictionary<T, E> map, T key,E _de = default) {
             if (map.ContainsKey(key)) return map[key];
             return _de;
+        }
+
+
+        public static List<Type> listExtends(Type root) {
+            return Assembly.GetAssembly(root).GetTypes()
+              .Where(x => root.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
         }
 
     }
