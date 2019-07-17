@@ -159,5 +159,11 @@ namespace surfm.tool {
             return Physics.CapsuleCastAll(p1, p2, r, new Vector3(0.001f, 0.001f, 0.001f), castD, layerMask);
         }
 
+        public static void setLayerRecursively(GameObject go, int layerNumber) {
+            foreach (Transform trans in go.GetComponentsInChildren<Transform>(true)) {
+                trans.gameObject.layer = layerNumber;
+            }
+        }
+
     }
 }
