@@ -1,26 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 namespace surfm.tool {
 
     public class OverlayBoxShower : MonoBehaviour {
+        public OverlayBoxSetting setting;
         public OverlayBox overlayBox;
-        public OverlayBoxBundle bundle = new OverlayBoxBundle();
         private RectTransform rectT;
         public bool followed;
-        public float followInterval = 0.1f;
+        
 
         void Awake() {
             rectT = GetComponent<RectTransform>();
         }
 
-        public void show() {
+        public void show(bool b) {
+            if (!b) {
+                overlayBox.close();
+                return;
+            }
+            OverlayBoxBundle bundle = null;
             if (followed) {
-                bundle.followTram = rectT;
-                bundle.followInterval = followInterval;
+                bundle = new OverlayBoxBundle(setting, rectT);
             } else {
-                bundle.position = rectT.position;
+                bundle = new OverlayBoxBundle(setting, rectT.position);
             }
             overlayBox.show(bundle);
         }
+
 
 
     }
