@@ -5,7 +5,7 @@ using UnityEngine;
 namespace surfm.tool {
     public class Tabset : MonoBehaviour {
 
-        private List<Tab> tabs;
+        public List<Tab> tabs;
         public Tab currentSelect;
         public TriggerEvent.BoolEvent onSelectedEvent;
 
@@ -15,7 +15,7 @@ namespace surfm.tool {
         }
 
         public void initTabs() {
-            tabs = new List<Tab>(GetComponentsInChildren<Tab>());
+            if(tabs==null) tabs = new List<Tab>(GetComponentsInChildren<Tab>());
             tabs.ForEach(t => {
                 t.init(this);
             });
