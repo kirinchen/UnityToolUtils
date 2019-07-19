@@ -153,8 +153,12 @@ namespace surfm.tool {
         }
 
         public static object convert(object source,Type type) {
-            string json= JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
+            string json= toJson(source);
             return JsonConvert.DeserializeObject(json,type, ObscuredValueConverter.DEFAULT);
+        }
+
+        public static string toJson(object source) {
+           return JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
         }
 
         public static E optMap<T, E>(Dictionary<T, E> map, T key,E _de = default) {

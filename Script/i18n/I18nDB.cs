@@ -6,69 +6,48 @@ using System.Reflection;
 namespace surfm.tool.i18n {
     public class I18nDB : MonoBehaviour {
 
-        public enum Language {
-            NONE, Taiwan, CN, English, ru, kr, es, pt, jp
+        [System.Serializable]
+        public class TermLang {
+            public SystemLanguage language;
+            public string value;
+
+            public TermLang() { }
+
+            public TermLang(SystemLanguage systemLanguage) {
+                language = systemLanguage;
+            }
         }
 
         [System.Serializable]
         public class Term {
-            [TextArea(1, 10)]
             public string name;
-            [TextArea(1, 10)]
-            public string tw;
-            [TextArea(1, 10)]
-            public string cn;
-            [TextArea(1, 10)]
-            public string eng;
-            [TextArea(1, 10)]
-            public string ru;
-            [TextArea(1, 10)]
-            public string kr;
-            [TextArea(1, 10)]
-            public string es;
-            [TextArea(1, 10)]
-            public string pt;
-            [TextArea(1, 10)]
-            public string jp;
+            public List<TermLang> termLangs = new List<TermLang>();
 
-            public string get(Language l) {
-                switch (l) {
-                    case Language.Taiwan:
-                        return tw;
-                    case Language.CN:
-                        return cn;
-                    case Language.English:
-                        return eng;
-                    case Language.es:
-                        return es;
-                    case Language.pt:
-                        return pt;
-                    case Language.ru:
-                        return ru;
-                    case Language.kr:
-                        return kr;
-                    case Language.jp:
-                        return jp;
-                }
-                return name;
+            public Term() { }
+            public Term(string n) { name = n; }
+
+            public TermLang getTermLang(SystemLanguage l) {
+                return termLangs.Find(tl => tl.language == l);
+            }
+
+            public string get(SystemLanguage l,SystemLanguage dl) {
+                TermLang tl = getTermLang(l);
+                if (tl != null) return tl.value;
+                return getTermLang(dl).value;
             }
 
             public override string ToString() {
-                string s = "";
-                foreach (Language l in Enum.GetValues(typeof(Language))) {
-                    s += l + ":" + get(l) + ", ";
-                }
-                return s;
+                return CommUtils.toJson(termLangs);
             }
         }
-        public Language defaultLanguage = Language.English;
+        public SystemLanguage defaultLanguage = SystemLanguage.English;
         public string search;
         public bool sort;
         private Dictionary<string, Term> map = new Dictionary<string, Term>();
         public List<Term> terms = new List<Term>();
 
 
-        public static string get(string cat, string key, Language l) {
+        public static string get(string cat, string key, SystemLanguage l) {
             try {
                 return getInstance(cat)._get(key, l);
             } catch (Exception e) {
@@ -76,7 +55,7 @@ namespace surfm.tool.i18n {
             }
         }
 
-        public string _get(string key, Language l) {
+        public string _get(string key, SystemLanguage l) {
             if (map.Count <= 0) {
                 injectMap();
             }
@@ -84,7 +63,7 @@ namespace surfm.tool.i18n {
                 Debug.Log("[i18n] Not find key=" + key);
                 return key;
             }
-            string ans = map[key].get(l);
+            string ans = map[key].get(l,defaultLanguage);
             if (string.IsNullOrEmpty(ans)) {
                 Debug.Log("[i18n] Not find Language=" + l + "  key=" + key);
                 return l == defaultLanguage ? key : _get(key, defaultLanguage);

@@ -7,10 +7,7 @@ namespace surfm.tool.i18n {
 
         public static readonly string KEY_I18N = "KEY_I18N";
         public static I18n instance = null;
-        internal I18nDB.Language language
-        {
-            get; private set;
-        }
+        internal SystemLanguage language { get; private set; }
 
         public string category = "I18nDB";
 
@@ -23,48 +20,21 @@ namespace surfm.tool.i18n {
 
 
         internal void setupLanguage() {
-            language = getI18nName();
+            language = loadAssignLanguage();
         }
 
-        private I18nDB.Language getI18nName() {
 
-            I18nDB.Language ans = loadAssignLanguage();
-            if (ans != I18nDB.Language.NONE) {
-                return ans;
-            }
-            switch (Application.systemLanguage) {
-                case SystemLanguage.English:
-                    return I18nDB.Language.English;
-                case SystemLanguage.ChineseTraditional:
-                case SystemLanguage.Chinese:
-                    return I18nDB.Language.Taiwan;
-                case SystemLanguage.ChineseSimplified:
-                    return I18nDB.Language.CN;
-                case SystemLanguage.Russian:
-                    return I18nDB.Language.ru;
-                case SystemLanguage.Korean:
-                    return I18nDB.Language.kr;
-                case SystemLanguage.Portuguese:
-                    return I18nDB.Language.pt;
-                case SystemLanguage.Spanish:
-                    return I18nDB.Language.es;
-            }
-
-            return I18nDB.Language.English;
-
-        }
-
-        private I18nDB.Language loadAssignLanguage() {
+        private SystemLanguage loadAssignLanguage() {
             try {
                 string ui = PlayerPrefs.GetString(KEY_I18N);
-                I18nDB.Language lg = (I18nDB.Language)Enum.Parse(typeof(I18nDB.Language), ui);
+                SystemLanguage lg = (SystemLanguage)Enum.Parse(typeof(SystemLanguage), ui);
                 return lg;
             } catch (Exception e) {
-                return I18nDB.Language.NONE;
+                return SystemLanguage.English;
             }
         }
 
-        public void saveAssignLanguage(I18nDB.Language lg) {
+        public void saveAssignLanguage(SystemLanguage lg) {
             PlayerPrefs.SetString(KEY_I18N, lg.ToString());
         }
 
