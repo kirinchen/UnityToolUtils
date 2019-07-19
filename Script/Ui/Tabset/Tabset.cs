@@ -8,10 +8,12 @@ namespace surfm.tool {
         public List<Tab> tabs;
         public Tab currentSelect;
         public TriggerEvent.BoolEvent onSelectedEvent;
+        public CallbackList initActions { get; private set; } = new CallbackList();
 
 
         public void Start() {
             initTabs();
+            initActions.done();
         }
 
         public void initTabs() {
