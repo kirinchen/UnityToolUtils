@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Globalization;
 
 namespace surfm.tool {
 
@@ -23,5 +25,14 @@ namespace surfm.tool {
             return this[fid];
         }
 
+        internal List<K> listKeysByValue(V c) {
+            List<K> ans = new List<K>();
+            foreach (K k in Keys) {
+                if (this[k].Equals(c)) {
+                    ans.Add(k);
+                }
+            }
+            return ans;
+        }
     }
 }

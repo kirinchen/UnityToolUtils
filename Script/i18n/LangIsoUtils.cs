@@ -3,53 +3,66 @@ using UnityEngine;
 namespace surfm.tool {
 
     public class LangIsoUtils {
+        private static Map<SystemLanguage, CultureInfo> map = new Map<SystemLanguage, CultureInfo>();
+
+        private static void init() {
+            if (map.Count > 0) return;
+                map.Add( SystemLanguage.Afrikaans, CultureInfo.GetCultureInfo("AF"));
+                map.Add( SystemLanguage.Arabic, CultureInfo.GetCultureInfo("AR"));
+                map.Add( SystemLanguage.Basque, CultureInfo.GetCultureInfo("EU"));
+                map.Add( SystemLanguage.Belarusian, CultureInfo.GetCultureInfo("BE"));
+                map.Add( SystemLanguage.Bulgarian, CultureInfo.GetCultureInfo("BG"));
+                map.Add( SystemLanguage.Catalan, CultureInfo.GetCultureInfo("CA"));
+                map.Add( SystemLanguage.Chinese, CultureInfo.GetCultureInfo("ZH"));
+                map.Add( SystemLanguage.ChineseSimplified, CultureInfo.GetCultureInfo("zh-Hans"));
+                map.Add( SystemLanguage.ChineseTraditional, CultureInfo.GetCultureInfo("zh-Hant"));
+                map.Add( SystemLanguage.Czech, CultureInfo.GetCultureInfo("CS"));
+                map.Add( SystemLanguage.Danish, CultureInfo.GetCultureInfo("DA"));
+                map.Add( SystemLanguage.Dutch, CultureInfo.GetCultureInfo("NL"));
+                map.Add( SystemLanguage.English, CultureInfo.GetCultureInfo("EN"));
+                map.Add( SystemLanguage.Estonian, CultureInfo.GetCultureInfo("ET"));
+                map.Add( SystemLanguage.Faroese, CultureInfo.GetCultureInfo("FO"));
+                map.Add( SystemLanguage.Finnish, CultureInfo.GetCultureInfo("FI"));
+                map.Add( SystemLanguage.French, CultureInfo.GetCultureInfo("FR"));
+                map.Add( SystemLanguage.German, CultureInfo.GetCultureInfo("DE"));
+                map.Add( SystemLanguage.Greek, CultureInfo.GetCultureInfo("EL"));
+                map.Add( SystemLanguage.Hebrew, CultureInfo.GetCultureInfo("HE"));
+                map.Add( SystemLanguage.Hungarian, CultureInfo.GetCultureInfo("HU"));
+                map.Add( SystemLanguage.Icelandic, CultureInfo.GetCultureInfo("IS"));
+                map.Add( SystemLanguage.Indonesian, CultureInfo.GetCultureInfo("ID"));
+                map.Add( SystemLanguage.Italian, CultureInfo.GetCultureInfo("IT"));
+                map.Add( SystemLanguage.Japanese, CultureInfo.GetCultureInfo("JA"));
+                map.Add( SystemLanguage.Korean, CultureInfo.GetCultureInfo("KO"));
+                map.Add( SystemLanguage.Latvian, CultureInfo.GetCultureInfo("LV"));
+                map.Add( SystemLanguage.Lithuanian, CultureInfo.GetCultureInfo("LT"));
+                map.Add( SystemLanguage.Norwegian, CultureInfo.GetCultureInfo("NO"));
+                map.Add( SystemLanguage.Polish, CultureInfo.GetCultureInfo("PL"));
+                map.Add( SystemLanguage.Portuguese, CultureInfo.GetCultureInfo("PT"));
+                map.Add( SystemLanguage.Romanian, CultureInfo.GetCultureInfo("RO"));
+                map.Add( SystemLanguage.Russian, CultureInfo.GetCultureInfo("RU"));
+                map.Add( SystemLanguage.Slovak, CultureInfo.GetCultureInfo("SK"));
+                map.Add( SystemLanguage.Slovenian, CultureInfo.GetCultureInfo("SL"));
+                map.Add( SystemLanguage.Spanish, CultureInfo.GetCultureInfo("ES"));
+                map.Add( SystemLanguage.Swedish, CultureInfo.GetCultureInfo("SV"));
+                map.Add( SystemLanguage.Thai, CultureInfo.GetCultureInfo("TH"));
+                map.Add( SystemLanguage.Turkish, CultureInfo.GetCultureInfo("TR"));
+                map.Add( SystemLanguage.Ukrainian, CultureInfo.GetCultureInfo("UK"));
+                map.Add( SystemLanguage.Unknown, CultureInfo.GetCultureInfo("EN"));
+                map.Add( SystemLanguage.Vietnamese, CultureInfo.GetCultureInfo("VI"));
+        }
+
+
+
+
+        public static SystemLanguage getByCulture(CultureInfo c) {
+            init();
+            if (map.ContainsValue(c)) return map.listKeysByValue(c)[0];
+            throw new System.NullReferenceException("not impl this lang=" + c);
+        }
 
         public static CultureInfo getByUnityLan(SystemLanguage lang) {
-            switch (lang) {
-                case SystemLanguage.Afrikaans: return CultureInfo.GetCultureInfo("AF");
-                case SystemLanguage.Arabic: return CultureInfo.GetCultureInfo("AR");
-                case SystemLanguage.Basque: return CultureInfo.GetCultureInfo("EU");
-                case SystemLanguage.Belarusian: return CultureInfo.GetCultureInfo("BY");
-                case SystemLanguage.Bulgarian: return CultureInfo.GetCultureInfo("BG");
-                case SystemLanguage.Catalan: return CultureInfo.GetCultureInfo("CA");
-                case SystemLanguage.Chinese: return CultureInfo.GetCultureInfo("ZH");
-                case SystemLanguage.ChineseSimplified: return CultureInfo.GetCultureInfo("zh-Hans");
-                case SystemLanguage.ChineseTraditional: return CultureInfo.GetCultureInfo("zh-Hant");
-                case SystemLanguage.Czech: return CultureInfo.GetCultureInfo("CS");
-                case SystemLanguage.Danish: return CultureInfo.GetCultureInfo("DA");
-                case SystemLanguage.Dutch: return CultureInfo.GetCultureInfo("NL");
-                case SystemLanguage.English: return CultureInfo.GetCultureInfo("EN");
-                case SystemLanguage.Estonian: return CultureInfo.GetCultureInfo("ET");
-                case SystemLanguage.Faroese: return CultureInfo.GetCultureInfo("FO");
-                case SystemLanguage.Finnish: return CultureInfo.GetCultureInfo("FI");
-                case SystemLanguage.French: return CultureInfo.GetCultureInfo("FR");
-                case SystemLanguage.German: return CultureInfo.GetCultureInfo("DE");
-                case SystemLanguage.Greek: return CultureInfo.GetCultureInfo("EL");
-                case SystemLanguage.Hebrew: return CultureInfo.GetCultureInfo("IW");
-                case SystemLanguage.Hungarian: return CultureInfo.GetCultureInfo("HU");
-                case SystemLanguage.Icelandic: return CultureInfo.GetCultureInfo("IS");
-                case SystemLanguage.Indonesian: return CultureInfo.GetCultureInfo("IN");
-                case SystemLanguage.Italian: return CultureInfo.GetCultureInfo("IT");
-                case SystemLanguage.Japanese: return CultureInfo.GetCultureInfo("JA");
-                case SystemLanguage.Korean: return CultureInfo.GetCultureInfo("KO");
-                case SystemLanguage.Latvian: return CultureInfo.GetCultureInfo("LV");
-                case SystemLanguage.Lithuanian: return CultureInfo.GetCultureInfo("LT");
-                case SystemLanguage.Norwegian: return CultureInfo.GetCultureInfo("NO");
-                case SystemLanguage.Polish: return CultureInfo.GetCultureInfo("PL");
-                case SystemLanguage.Portuguese: return CultureInfo.GetCultureInfo("PT");
-                case SystemLanguage.Romanian: return CultureInfo.GetCultureInfo("RO");
-                case SystemLanguage.Russian: return CultureInfo.GetCultureInfo("RU");
-                case SystemLanguage.SerboCroatian: return CultureInfo.GetCultureInfo("SH");
-                case SystemLanguage.Slovak: return CultureInfo.GetCultureInfo("SK");
-                case SystemLanguage.Slovenian: return CultureInfo.GetCultureInfo("SL");
-                case SystemLanguage.Spanish: return CultureInfo.GetCultureInfo("ES");
-                case SystemLanguage.Swedish: return CultureInfo.GetCultureInfo("SV");
-                case SystemLanguage.Thai: return CultureInfo.GetCultureInfo("TH");
-                case SystemLanguage.Turkish: return CultureInfo.GetCultureInfo("TR");
-                case SystemLanguage.Ukrainian: return CultureInfo.GetCultureInfo("UK");
-                case SystemLanguage.Unknown: return CultureInfo.GetCultureInfo("EN");
-                case SystemLanguage.Vietnamese: return CultureInfo.GetCultureInfo("VI");
-            }
+            init();
+            if (map.ContainsKey(lang)) return map[lang];
             throw new System.NullReferenceException("not impl this lang=" + lang);
         }
     }
