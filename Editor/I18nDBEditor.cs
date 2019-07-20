@@ -12,6 +12,11 @@ namespace surfm.tool.i18n {
         private string _addName;
         public override void OnInspectorGUI() {
             serializedObject.Update();
+
+            List<SystemLanguage> sls = EnumHelper.ToList<SystemLanguage>();
+            int idx = EditorUtils.popupList("Default Lang",sls.ConvertAll(s=>s.ToString()),s=> db.defaultLanguage.ToString() );
+            if (idx >= 0) db.defaultLanguage = sls[idx];
+
             EditorGUILayout.BeginHorizontal("box");
             _addName = GUILayout.TextField(_addName);
             if (GUILayout.Button("ADD")) {

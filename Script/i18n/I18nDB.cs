@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using Newtonsoft.Json;
+
 namespace surfm.tool.i18n {
     public class I18nDB : MonoBehaviour {
 
@@ -40,6 +42,7 @@ namespace surfm.tool.i18n {
                 return CommUtils.toJson(termLangs);
             }
         }
+        public string category { get; private set; }
         public SystemLanguage defaultLanguage = SystemLanguage.English;
         public string search;
         public bool sort;
@@ -55,12 +58,27 @@ namespace surfm.tool.i18n {
             }
         }
 
+
+        public static List<string> loadLostKeys(string cat) {
+            string ss= PlayerPrefs.GetString(cat+"_I18nlostKeys","[]");
+            return JsonConvert.DeserializeObject<List<string>>(ss);
+        }
+
+        private static void appendLostKey(string cat,string key) {
+            List<string> lkeys = loadLostKeys(cat);
+            if (lkeys.Contains(key)) return;
+            lkeys.Add(key);
+            string ss = CommUtils.toJson(lkeys);
+            PlayerPrefs.SetString(cat + "_I18nlostKeys",ss);
+        }
+
         public string _get(string key, SystemLanguage l) {
             if (map.Count <= 0) {
                 injectMap();
             }
             if (!map.ContainsKey(key)) {
                 Debug.Log("[i18n] Not find key=" + key);
+                appendLostKey(category, key);
                 return key;
             }
             string ans = map[key].get(l,defaultLanguage);
@@ -111,7 +129,9 @@ namespace surfm.tool.i18n {
 
         public static I18nDB getInstance(string category) {
             if (!cache.ContainsKey(category)) {
-                cache.Add(category, Resources.Load<I18nDB>(category));
+                I18nDB i18NDB = Resources.Load<I18nDB>(category);
+                i18NDB.category = category;
+                cache.Add(category, i18NDB);
             }
             return cache[category];
         }

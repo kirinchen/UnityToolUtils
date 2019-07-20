@@ -26,6 +26,7 @@ namespace surfm.tool.i18n {
 
         private SystemLanguage loadAssignLanguage() {
             try {
+                if (!PlayerPrefs.HasKey(KEY_I18N)) return Application.systemLanguage;
                 string ui = PlayerPrefs.GetString(KEY_I18N);
                 SystemLanguage lg = (SystemLanguage)Enum.Parse(typeof(SystemLanguage), ui);
                 return lg;
