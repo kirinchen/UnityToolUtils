@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,17 +12,21 @@ namespace surfm.tool.i18n {
         public override void OnInspectorGUI() {
             serializedObject.Update();
 
+            if (GUILayout.Button("SAVE")) {
+                EditorUtility.SetDirty(target);
+            }
+
             db.recordLostKeys = EditorGUILayout.Toggle("recordLostKeys", db.recordLostKeys);
 
             List<SystemLanguage> sls = EnumHelper.ToList<SystemLanguage>();
-            int idx = EditorUtils.popupList("Default Lang",sls.ConvertAll(s=>s.ToString()),s=> db.defaultLanguage.ToString() );
+            int idx = EditorUtils.popupList("Default Lang", sls.ConvertAll(s => s.ToString()), s => db.defaultLanguage.ToString());
             if (idx >= 0) db.defaultLanguage = sls[idx];
 
             EditorGUILayout.BeginHorizontal("box");
             _addName = GUILayout.TextField(_addName);
             if (GUILayout.Button("ADD")) {
                 db.terms.Add(new I18nDB.Term(_addName));
-               _addName = "";
+                _addName = "";
             }
             EditorGUILayout.EndHorizontal();
 
@@ -36,7 +39,7 @@ namespace surfm.tool.i18n {
             EditorGUILayout.BeginVertical("box");
             obj.name = GUILayout.TextField(obj.name);
             selectLang(obj);
-            new List<I18nDB.TermLang>(obj.termLangs).ForEach(tl=> showLangTerm(obj,tl));
+            new List<I18nDB.TermLang>(obj.termLangs).ForEach(tl => showLangTerm(obj, tl));
             EditorGUILayout.EndVertical();
         }
 
@@ -51,7 +54,7 @@ namespace surfm.tool.i18n {
 
         private void selectLang(I18nDB.Term obj) {
             List<SystemLanguage> sls = EnumHelper.ToList<SystemLanguage>();
-            sls = sls.FindAll(s=>!obj.termLangs.Exists(tl=>tl.language==s));
+            sls = sls.FindAll(s => !obj.termLangs.Exists(tl => tl.language == s));
             int idx = EditorUtils.popupList("Add Lang", sls.ConvertAll(s => s.ToString()), s => s);
             if (idx >= 0) {
                 obj.termLangs.Add(new I18nDB.TermLang(sls[idx]));
