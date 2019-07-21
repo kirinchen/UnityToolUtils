@@ -10,11 +10,11 @@ namespace surfm.tool {
         public abstract List<D> listData();
         internal abstract void setEmplty(E row);
         internal abstract void refleshTile(D d, E e, int idx);
-        public Transform parent;
+        public RectTransform parent;
 
         public virtual void Awake() {
             if (parent == null) {
-                parent = transform;
+                parent = GetComponent<RectTransform>();
             }
             template = GetComponentInChildren<E>();
             rows.Add(template);
