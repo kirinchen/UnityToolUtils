@@ -13,6 +13,8 @@ namespace surfm.tool.i18n {
         public override void OnInspectorGUI() {
             serializedObject.Update();
 
+            db.recordLostKeys = EditorGUILayout.Toggle("recordLostKeys", db.recordLostKeys);
+
             List<SystemLanguage> sls = EnumHelper.ToList<SystemLanguage>();
             int idx = EditorUtils.popupList("Default Lang",sls.ConvertAll(s=>s.ToString()),s=> db.defaultLanguage.ToString() );
             if (idx >= 0) db.defaultLanguage = sls[idx];
@@ -26,6 +28,7 @@ namespace surfm.tool.i18n {
             EditorGUILayout.EndHorizontal();
 
             db.terms.ForEach(showTerm);
+            //EditorUtility.SetDirty(target);
             serializedObject.ApplyModifiedProperties();
         }
 

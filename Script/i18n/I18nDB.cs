@@ -44,6 +44,7 @@ namespace surfm.tool.i18n {
         }
         public string category { get; private set; }
         public SystemLanguage defaultLanguage = SystemLanguage.English;
+        public bool recordLostKeys;
         public string search;
         public bool sort;
         private Dictionary<string, Term> map = new Dictionary<string, Term>();
@@ -59,18 +60,24 @@ namespace surfm.tool.i18n {
         }
 
 
-        public static List<string> loadLostKeys(string cat) {
-            string ss= PlayerPrefs.GetString(cat+"_I18nlostKeys","[]");
+        public List<string> loadLostKeys() {
+            string ss= PlayerPrefs.GetString(category+"_I18nlostKeys","[]");
             return JsonConvert.DeserializeObject<List<string>>(ss);
         }
 
-        private static void appendLostKey(string cat,string key) {
-            List<string> lkeys = loadLostKeys(cat);
+        private void appendLostKey(string key) {
+            if (!recordLostKeys) return; 
+            List<string> lkeys = loadLostKeys();
             if (lkeys.Contains(key)) return;
             lkeys.Add(key);
-            string ss = CommUtils.toJson(lkeys);
-            PlayerPrefs.SetString(cat + "_I18nlostKeys",ss);
+            saveLostKeys(lkeys);
         }
+
+        public void saveLostKeys(List<string> lkeys) {
+            if (!recordLostKeys) return;
+            string ss = CommUtils.toJson(lkeys);
+            PlayerPrefs.SetString(category + "_I18nlostKeys", ss);
+        } 
 
         public string _get(string key, SystemLanguage l) {
             if (map.Count <= 0) {
@@ -78,7 +85,7 @@ namespace surfm.tool.i18n {
             }
             if (!map.ContainsKey(key)) {
                 Debug.Log("[i18n] Not find key=" + key);
-                appendLostKey(category, key);
+                appendLostKey( key);
                 return key;
             }
             string ans = map[key].get(l,defaultLanguage);
