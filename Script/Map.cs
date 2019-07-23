@@ -18,6 +18,10 @@ namespace surfm.tool {
             this[fid] = rate;
         }
 
+        public V get(K fid) {
+            return get(fid , defaultV());
+        }
+
         public V get(K fid, V defaultV) {
             if (!this.ContainsKey(fid)) {
                 this.Add(fid, defaultV);
@@ -33,6 +37,10 @@ namespace surfm.tool {
                 }
             }
             return ans;
+        }
+
+        protected virtual V defaultV() {
+            return default(V);
         }
     }
 }
