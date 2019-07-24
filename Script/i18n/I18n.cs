@@ -35,6 +35,10 @@ namespace surfm.tool.i18n {
             }
         }
 
+        internal static string get(object i18N_PREFIX) {
+            throw new NotImplementedException();
+        }
+
         public void saveAssignLanguage(SystemLanguage lg) {
             PlayerPrefs.SetString(KEY_I18N, lg.ToString());
         }

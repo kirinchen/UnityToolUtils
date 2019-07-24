@@ -30,5 +30,9 @@ namespace surfm.tool {
         internal void setSelectUi(bool v) {
             selectEvent.Invoke(v);
         }
+
+        internal void setCurrent() {
+            tabset.onChanageTab(this);
+        }
     }
 }
