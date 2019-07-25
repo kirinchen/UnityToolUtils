@@ -19,14 +19,6 @@ namespace surfm.tool {
             return fields.Find(f=> f.field.Equals(info) );
         }
 
-        public void setVal(AsField<T> field,object val) {
-            ReflectionTool.setVal(field.field,obj,val);
-        }
-
-        public object getVal(AsField<T> field) {
-            return ReflectionTool.getVal(field.field,obj);
-        }
-
 
 
 
@@ -42,11 +34,12 @@ namespace surfm.tool {
         }
 
         public void setVal(object o) {
-            obj.setVal(this, o);
+
+            ReflectionTool.setVal(field, obj.obj, o);
         }
 
         public object getVal() {
-            return obj.getVal(this);
+            return ReflectionTool.getVal(field, obj.obj);
         }
 
 

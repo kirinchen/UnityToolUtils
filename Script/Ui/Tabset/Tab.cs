@@ -32,7 +32,7 @@ namespace surfm.tool {
         }
 
         internal void setCurrent() {
-            tabset.onChanageTab(this);
+            if(tabset) tabset.onChanageTab(this);
         }
     }
 }
