@@ -24,6 +24,10 @@ namespace surfm.tool {
             findAnim(uid).ForEach(da=> da.DORestartById(uid.ToString()));
         }
 
+        public void play(bool b) {
+            play(b? AnimUid.MoveIn :  AnimUid.MoveOut);
+        }
+
 
 
         public List<DOTweenAnimation> findAnim(AnimUid aimUid) {
