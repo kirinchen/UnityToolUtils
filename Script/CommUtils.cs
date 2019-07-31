@@ -157,6 +157,10 @@ namespace surfm.tool {
             return JsonConvert.DeserializeObject(json,type, ObscuredValueConverter.DEFAULT);
         }
 
+        public static object convertByJson(string json, Type type) {
+            return JsonConvert.DeserializeObject(json, type, ObscuredValueConverter.DEFAULT);
+        }
+
         public static string toJson(object source) {
            return JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
         }
