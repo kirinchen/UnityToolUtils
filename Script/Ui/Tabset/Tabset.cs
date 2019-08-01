@@ -31,7 +31,7 @@ namespace surfm.tool {
             }
         }
 
-        private void reflesh() {
+        public void reflesh() {
             tabs.ForEach(t => {
                 t.setSelectUi(t == currentSelect);
             });
