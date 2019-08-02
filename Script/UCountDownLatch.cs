@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading;
 using UnityEngine;
 
 namespace surfm.tool {
 
-    public class UCountDownLatch  {
+    public class UCountDownLatch {
         private int counter;
         private Action action;
 
@@ -22,13 +21,17 @@ namespace surfm.tool {
         }
 
         public void CountDown() {
-                counter--;
+            counter--;
             triggerAction(action);
         }
 
         private void triggerAction(Action a) {
             if (counter == 0) {
-                a();
+                try {
+                    a();
+                } catch (Exception e) {
+                    Debug.LogError(e);
+                }
             }
             if (counter < 0) {
                 throw new System.Exception("can not counter <0");
