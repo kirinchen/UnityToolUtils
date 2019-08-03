@@ -9,6 +9,7 @@ namespace surfm.tool {
         private List<Dialog> dialogs = new List<Dialog>();
 
         void Awake() {
+            DontDestroyOnLoad(gameObject);
             dialogs = new List<Dialog>(GetComponentsInChildren<Dialog>());
         }
 
@@ -18,6 +19,10 @@ namespace surfm.tool {
             D ans= (D)dialogs.Find(d=> d.GetType().Equals(t));
             ans.show(true);
             return ans;
+        }
+
+        public void close(float delay) {
+            UnityUtils.delay(this, close, delay);
         }
 
         public void close() {
@@ -36,6 +41,7 @@ namespace surfm.tool {
         }
 
         public abstract class Dialog : PlayInOut {
+
 
             public virtual void show(bool b) {
                 play(b);
