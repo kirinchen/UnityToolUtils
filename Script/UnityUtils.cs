@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace surfm.tool {
-    public class UnityUtils : MonoBehaviour {
+    public static class UnityUtils  {
 
         public static T getComponentByName<T>(GameObject mb, string name) where T : Component {
             return getComponentByName<T>(mb, c => { return c.name.Equals(name); });
@@ -41,7 +41,7 @@ namespace surfm.tool {
             screenShot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
             camera.targetTexture = null;
             RenderTexture.active = null; // JC: added to avoid errors
-            Destroy(rt);
+            GameObject.Destroy(rt);
             byte[] bytes = screenShot.EncodeToPNG();
             System.IO.FileInfo file = new System.IO.FileInfo(filename);
             file.Directory.Create();
@@ -70,11 +70,11 @@ namespace surfm.tool {
             return entry;
         }
 
-        public static Coroutine delay(MonoBehaviour mb, System.Action a, float it) {
+        public static Coroutine delay(this MonoBehaviour mb, System.Action a, float it) {
             return mb.StartCoroutine(_delay(a, it));
         }
 
-        public static Coroutine loop(MonoBehaviour mb, System.Action a, float start, float it) {
+        public static Coroutine loop(this MonoBehaviour mb, System.Action a, float start, float it) {
             return mb.StartCoroutine(_loop(a, start, it));
         }
 
