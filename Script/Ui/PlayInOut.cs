@@ -22,6 +22,7 @@ namespace surfm.tool {
             if (currentAId == uid) return;
             currentAId = uid;
             findAnim(uid).ForEach(da=> da.DORestartById(uid.ToString()));
+            
         }
 
         public void play(bool b) {
