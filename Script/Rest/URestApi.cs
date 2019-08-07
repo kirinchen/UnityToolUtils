@@ -15,9 +15,9 @@ namespace com.surfm.rest {
             public string errorMsg { get; internal set; }
             public HTTPRequestStates states { get; internal set; }
             public HTTPResponse response { get; internal set; }
-            public Exception exception { get; internal set; }
+            public RestException exception { get; internal set; }
 
-            internal Result onError(string error, HTTPRequestStates s, HTTPResponse resp, Exception e) {
+            internal Result onError(string error, HTTPRequestStates s, HTTPResponse resp, RestException e) {
                 errorMsg = error;
                 states = s;
                 response = resp;
@@ -39,10 +39,6 @@ namespace com.surfm.rest {
 
             public override string ToString() {
                 return JsonConvert.SerializeObject(this, ObscuredValueConverter.DEFAULT);
-            }
-
-            public RestException toRestException() {
-                return (RestException)exception;
             }
 
 
@@ -107,7 +103,8 @@ namespace com.surfm.rest {
                             try {
                                 callback(result.onOk(resp));
                             } catch (Exception e) {
-                                callback(result.onError(msg, req.State, resp, e));
+                                Debug.LogError(e);
+                                throw e;
                             }
                         } else {
                             msg =
