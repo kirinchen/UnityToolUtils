@@ -41,6 +41,11 @@ namespace com.surfm.rest {
                 return JsonConvert.SerializeObject(this, ObscuredValueConverter.DEFAULT);
             }
 
+            public RestException toRestException() {
+                return (RestException)exception;
+            }
+
+
         }
 
 
