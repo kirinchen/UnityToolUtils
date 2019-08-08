@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 namespace surfm.tool {
     public static class UnityUtils  {
 
-        public static T getComponentByName<T>(GameObject mb, string name) where T : Component {
+        public static T getComponentByName<T>(this GameObject mb, string name) where T : Component {
             return getComponentByName<T>(mb, c => { return c.name.Equals(name); });
         }
 
