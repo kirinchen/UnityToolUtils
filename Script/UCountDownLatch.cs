@@ -1,34 +1,42 @@
 ﻿using System;
+using UniRx;
 using UnityEngine;
 
 namespace surfm.tool {
 
     public class UCountDownLatch {
-        private int counter;
+        public int counter { get; private set; }
         private Action action;
+
+        public UCountDownLatch() {
+        }
 
         public UCountDownLatch(int counter) {
             this.counter = counter;
         }
 
+        public IObservable<Unit> AsObservable() {
+            return Observable.FromEvent<Action>(h => { return h; }, h => action += h, h => action -= (h));
+        }
 
+        public void setCount(int c) {
+            counter = c;
+        }
 
         public void await(Action a) {
-            triggerAction(a);
             action = a;
-
-
+            triggerAction();
         }
 
         public void CountDown() {
             counter--;
-            triggerAction(action);
+            triggerAction();
         }
 
-        private void triggerAction(Action a) {
+        private void triggerAction() {
             if (counter == 0) {
                 try {
-                    a();
+                    action();
                 } catch (Exception e) {
                     Debug.LogError(e);
                 }
