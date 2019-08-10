@@ -6,7 +6,7 @@ namespace surfm.tool {
 
     public class UCountDownLatch {
         public int counter { get; private set; }
-        private Action action;
+        private Action action = ()=> { };
 
         public UCountDownLatch() {
         }
@@ -16,7 +16,11 @@ namespace surfm.tool {
         }
 
         public IObservable<Unit> AsObservable() {
-            return Observable.FromEvent<Action>(h => { return h; }, h => action += h, h => action -= (h));
+            Debug.Log("AsObservable!!");
+            return Observable.FromEvent<Action>(h => { return h; }, h => {
+                Debug.Log("action="+ action);
+                action += h;
+            } , h => action -= (h));
         }
 
         public void setCount(int c) {
