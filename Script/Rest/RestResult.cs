@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using static com.surfm.rest.URestApi;
+using surfm.tool;
 
 namespace com.surfm.rest {
     public class TypeResult<R> {
@@ -13,6 +14,10 @@ namespace com.surfm.rest {
 
         public R getBody() {
             return result.getBody<R>();
+        }
+
+        public override string ToString() {
+            return CommUtils.toJson(this);
         }
 
 

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -152,9 +151,9 @@ namespace surfm.tool {
             return string.Empty;
         }
 
-        public static object convert(object source,Type type) {
-            string json= toJson(source);
-            return JsonConvert.DeserializeObject(json,type, ObscuredValueConverter.DEFAULT);
+        public static object convert(object source, Type type) {
+            string json = toJson(source);
+            return JsonConvert.DeserializeObject(json, type, ObscuredValueConverter.DEFAULT);
         }
 
         public static object convertByJson(string json, Type type) {
@@ -162,10 +161,10 @@ namespace surfm.tool {
         }
 
         public static string toJson(object source) {
-           return JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
         }
 
-        public static E optMap<T, E>(Dictionary<T, E> map, T key,E _de = default) {
+        public static E optMap<T, E>(Dictionary<T, E> map, T key, E _de = default) {
             if (map.ContainsKey(key)) return map[key];
             return _de;
         }
@@ -176,6 +175,30 @@ namespace surfm.tool {
               .Where(x => root.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
         }
 
+    }
+
+
+    public static class NumberEx {
+
+        public static string KiloFormat(this double num) {
+            if (num >= 100000000)
+                return (num / 1000000).ToString("#,0M");
+
+            if (num >= 10000000)
+                return (num / 1000000).ToString("0.#") + "M";
+
+            if (num >= 100000)
+                return (num / 1000).ToString("#,0K");
+
+            if (num >= 10000)
+                return (num / 1000).ToString("0.#") + "K";
+
+            return num.ToString("#,0");
+        }
+
+        public static string KiloFormat(this float num) {
+            return KiloFormat((double)num);
+        }
     }
 
 
