@@ -54,6 +54,11 @@ namespace surfm.tool {
             throw new NullReferenceException("not find this bean t=" + t + " name=" + name);
         }
 
+        public void clean() {
+            map.Clear();
+            injectAll();
+        }
+
         public static T bean<T>(string name = BeanAttribute.DEFAULT) {
             return getInstance()._bean<T>(typeof(T), name);
         }
