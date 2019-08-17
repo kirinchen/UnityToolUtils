@@ -20,7 +20,9 @@ namespace surfm.tool {
             }
         }
 
-        private void addOne(string k, object v) {
+
+
+        public void addOne(string k, object v) {
             if (map.ContainsKey(k)) map.Remove(k);
             map.Add(k, v);
         }
@@ -30,7 +32,9 @@ namespace surfm.tool {
             return _default;
         }
 
+
         public T get<T>(string k) {
+            if (!map.ContainsKey(k)) throw new NullReferenceException(k);
             return (T)map[k];
         }
 
