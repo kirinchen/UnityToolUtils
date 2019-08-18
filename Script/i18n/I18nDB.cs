@@ -84,7 +84,7 @@ namespace surfm.tool.i18n {
                 injectMap();
             }
             if (!map.ContainsKey(key)) {
-                Debug.Log("[i18n] Not find key=" + key);
+               // Debug.Log("[i18n] Not find key=" + key);
                 appendLostKey( key);
                 return key;
             }
