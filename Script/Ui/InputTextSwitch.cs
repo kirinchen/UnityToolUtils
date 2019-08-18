@@ -18,11 +18,14 @@ namespace surfm.tool {
             inputField.onEndEdit.AddListener(onEndEdit);
         }
 
+        void Start() {
+            refleshEnable();
+        }
+
         public void set(string txt,bool inped , Action<string> onC) {
             onChange = onC;
             text.text = inputField.text = txt;
             setInputed(inped);
-
         }
 
         private void onEndEdit(string arg0) {
@@ -32,12 +35,17 @@ namespace surfm.tool {
         public void setInputed(bool b) {
             if (inputed == b) return;
             inputed = b;
+            refleshEnable();
             uninputedEvent.Invoke(!inputed);
-            inputField.enabled = inputed;
             if (!inputed) {
                 text.text = inputField.text;
                 onChange(text.text);
             }
+        }
+
+        private void refleshEnable() {
+            inputField.gameObject.SetActive(  inputed);
+            text.gameObject.SetActive( !inputed);
         }
 
         public void toggle() {

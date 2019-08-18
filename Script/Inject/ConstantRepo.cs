@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +12,8 @@ namespace surfm.tool {
         }
 
         private void injectAll() {
-            List<CommConst> ss = new List<CommConst>( Resources.LoadAll<CommConst>(""));
-            ss.Sort((a,b)=> { return a.index.CompareTo(b.index); });
+            List<CommConst> ss = new List<CommConst>(Resources.LoadAll<CommConst>(""));
+            ss.Sort((a, b) => { return a.index.CompareTo(b.index); });
             foreach (CommConst cc in ss) {
                 cc.injectCommConst(addOne);
             }
@@ -31,6 +30,7 @@ namespace surfm.tool {
             if (map.ContainsKey(k)) return (T)map[k];
             return _default;
         }
+
 
 
         public T get<T>(string k) {
@@ -53,6 +53,8 @@ namespace surfm.tool {
             }
             return instance;
         }
+
+
 
 
     }
