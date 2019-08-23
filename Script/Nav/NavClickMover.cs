@@ -12,10 +12,14 @@ namespace surfm.tool {
         private IReactiveProperty<Vector3> targetPos = new ReactiveProperty<Vector3>(Vector3.zero);
         private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(30f);
         public Func<bool> onBeforeMove = () => true;
+        private LineRenderer pathLine;
 
 
         void Awake() {
             agent = GetComponent<NavMeshAgent>();
+            pathLine = GetComponent<LineRenderer>();
+
+            //pathLine.material.shader = Shader.Find("Sprites/Default");
         }
 
         void Start() {
@@ -26,6 +30,18 @@ namespace surfm.tool {
         protected virtual void Update() {
             onNewMoveTo();
             moveToTarget();
+            drawPath();
+        }
+
+        private void drawPath() {
+            NavMeshPath path = agent.path;
+            pathLine.enabled = path.corners.Length >= 2;
+            if (!pathLine.enabled) return;
+
+            pathLine.numCornerVertices = (path.corners.Length);
+            for (var i = 0; i < path.corners.Length; i++) {
+                pathLine.SetPosition(i, path.corners[i]); //go through each corner and set that to the line renderer's position
+            }
         }
 
         private void moveToTarget() {
