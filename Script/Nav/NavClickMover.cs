@@ -11,7 +11,7 @@ namespace surfm.tool {
         private NavMeshAgent agent;
         private IReactiveProperty<Vector3> targetPos = new ReactiveProperty<Vector3>(Vector3.zero);
         private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(30f);
-        public Func<bool> onBeforeMove = () => false;
+        public Func<bool> onBeforeMove = () => true;
 
 
         void Awake() {
@@ -34,7 +34,7 @@ namespace surfm.tool {
 
         private void onNewMoveTo() {
             if (!Input.GetMouseButtonUp(0)) return;
-            if (onBeforeMove()) return;
+            if (!onBeforeMove()) return;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, mask)) {

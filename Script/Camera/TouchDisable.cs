@@ -1,6 +1,7 @@
 ﻿using BitBenderGames;
 using System;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,12 +23,12 @@ namespace surfm.tool {
 
         private void onPointerExit(BaseEventData arg0) {
 
-            TouchDisableTaskPool.getInstance().actions.ForEach(a=>a(true));
+            TouchDisableTaskPool.getInstance().touchEnable.Value = true;
         }
 
         private void onPointerEnter(BaseEventData arg0) {
             //Debug.Log("onPointerEnter ctl="+ touchInputController);
-            TouchDisableTaskPool.getInstance().actions.ForEach(a => a(false));
+            TouchDisableTaskPool.getInstance().touchEnable.Value = false;
         }
     }
 
@@ -36,7 +37,14 @@ namespace surfm.tool {
         private static TouchDisableTaskPool instance;
 
         public List<Action<bool>> actions { get; private set; } = new List<Action<bool>>();
+        public IReactiveProperty<bool> touchEnable { get; private set; } = new ReactiveProperty<bool>(true);
 
+        private void init() {
+            touchEnable.Subscribe(b => {
+                actions.ForEach(a => a(b));
+            });
+        }
+        
 
         public static TouchDisableTaskPool getInstance() {
             if (!instance) {
