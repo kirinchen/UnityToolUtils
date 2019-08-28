@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +8,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 
 namespace surfm.tool {
-    public class EditorUtils {
+    public static class EditorUtils {
 
 
         public static void popupList(string title, List<string> l, string fieldN, SerializedProperty sp) {
@@ -64,9 +63,9 @@ namespace surfm.tool {
         }
 
         public static object draw(string lan, object obj) {
-            
+
             if (obj.GetType() == typeof(int)) {
-                return  EditorGUILayout.IntField(lan, (int)obj);
+                return EditorGUILayout.IntField(lan, (int)obj);
             }
             if (obj.GetType() == typeof(float)) {
                 return EditorGUILayout.FloatField(lan, (float)obj);
@@ -78,16 +77,26 @@ namespace surfm.tool {
                 return EditorGUILayout.Toggle(lan, Convert.ToBoolean(obj));
             }
             if (obj.GetType().IsEnum) {
-                string[] ns= Enum.GetNames(obj.GetType());
-                int idx = ns.ToList().FindIndex(e => e.Equals(obj.ToString()) );
+                string[] ns = Enum.GetNames(obj.GetType());
+                int idx = ns.ToList().FindIndex(e => e.Equals(obj.ToString()));
                 idx = EditorGUILayout.Popup(lan, idx, ns);
-                return Enum.Parse(obj.GetType(),ns[idx]);
+                return Enum.Parse(obj.GetType(), ns[idx]);
             }
+            if (obj.GetType() == typeof(Vector3)) {
+                return EditorGUILayout.Vector3Field(lan, (Vector3)obj);
+            }
+            if (obj.GetType() == typeof(Vector2)) {
+                return EditorGUILayout.Vector2Field(lan, (Vector2)obj);
+            }
+            if (obj.GetType() == typeof(Vector2Int)) {
+                return EditorGUILayout.Vector2IntField(lan, (Vector2Int)obj);
+            }
+
 
             return null;
         }
 
-        public static string getFieldName(FieldInfo fi) {
+        public static string getFieldName(this FieldInfo fi) {
             TooltipAttribute t = fi.GetCustomAttribute<TooltipAttribute>();
             if (t == null) return fi.Name;
             return t.tooltip;

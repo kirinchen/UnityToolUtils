@@ -175,6 +175,11 @@ namespace surfm.tool {
               .Where(x => root.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
         }
 
+        public static T opt<T, I>(I i, Func<I, T> f, T _de) {
+            if (i == null) return _de;
+            return f(i);
+        }
+
     }
 
 
