@@ -50,6 +50,7 @@ namespace surfm.tool {
             if (!instance) {
                 GameObject go = new GameObject(typeof(TouchDisableTaskPool).ToString());
                 instance= go.AddComponent<TouchDisableTaskPool>();
+                instance.init();
             }
             return instance;
         }
