@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 namespace surfm.tool {
     public class CallbackListT<T> {
 
@@ -18,12 +16,14 @@ namespace surfm.tool {
 
         public void done(T t) {
             this.t = t;
-            list.ForEach(a => a(t));
+            List<Action<T>> _l = new List<Action<T>>(list);
             list = null;
+            _l.ForEach(a => a(t));
         }
 
         public bool isDone() {
-            return list == null;
+            return t != null || list == null;
+
         }
 
     }
