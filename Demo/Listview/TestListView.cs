@@ -12,6 +12,7 @@ namespace surfm.tool.test {
             //listView.setAdapter
             demoAdapter = new DemoAdapter(itemPrefab);
             AdapterCtrl<SampleObjectModel, MyItemViewsHolder> ac = listView.setAdapter(demoAdapter);
+            
         }
 
     }
