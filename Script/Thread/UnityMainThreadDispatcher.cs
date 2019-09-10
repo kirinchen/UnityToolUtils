@@ -70,6 +70,18 @@ namespace surfm.tool {
             return _instance;
         }
 
+        public static void uniRxRun(Action a) {
+            var heavyMethod2 = Observable.Start(() => {
+                return 0;
+            });
+            // Join and await two other thread values
+            Observable.WhenAll(heavyMethod2)
+                .ObserveOnMainThread() // return to main thread
+                .Subscribe(xs => {
+                    a();
+                });
+        }
+
 
 
         void OnDestroy() {
