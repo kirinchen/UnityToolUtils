@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,8 +23,10 @@ namespace surfm.tool {
             if (currentAId == uid) return;
             currentAId = uid;
             findAnim(uid).ForEach(da=> da.DORestartById(uid.ToString()));
-            
+            onPlay(uid);
         }
+
+        protected virtual void onPlay(AnimUid uid) { }
 
         public void play(bool b) {
             play(b? AnimUid.MoveIn :  AnimUid.MoveOut);
