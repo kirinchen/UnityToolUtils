@@ -13,8 +13,8 @@ namespace surfm.tool {
             dialogs = new List<Dialog>(GetComponentsInChildren<Dialog>());
         }
 
-        public D show<D>() where D : Dialog {
-            close();
+        public virtual D show<D>(bool hideOther = true) where D : Dialog {
+            if(hideOther) close();
             Type t= typeof(D);
             D ans= (D)dialogs.Find(d=> d.GetType().Equals(t));
             ans.show(true);
@@ -25,9 +25,11 @@ namespace surfm.tool {
             UnityUtils.delay(this, close, delay);
         }
 
-        public void close() {
-            dialogs.ForEach(d=>d.show(false));
+        public void close( ) {
+            listCloseDialogs().ForEach(d=>d.show(false));
         }
+
+        protected virtual List<Dialog> listCloseDialogs() { return dialogs; }
 
         public static DialogKit instance
         {
