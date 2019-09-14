@@ -5,6 +5,7 @@ namespace surfm.tool {
 
         private List<Action<T>> list = new List<Action<T>>();
         private T t;
+        private bool doned = false;
 
         public void add(Action<T> a) {
             if (isDone()) {
@@ -15,14 +16,15 @@ namespace surfm.tool {
         }
 
         public void done(T t) {
+            if (doned) return;
+            doned = true;
             this.t = t;
-            List<Action<T>> _l = new List<Action<T>>(list);
+            list.ForEach(a => a(t));
             list = null;
-            _l.ForEach(a => a(t));
         }
 
         public bool isDone() {
-            return t != null || list == null;
+            return doned;
 
         }
 
