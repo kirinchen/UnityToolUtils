@@ -16,9 +16,7 @@ namespace surfm.tool {
         }
 
         public IObservable<Unit> AsObservable() {
-            Debug.Log("AsObservable!!");
             return Observable.FromEvent<Action>(h => { return h; }, h => {
-                Debug.Log("action="+ action);
                 action += h;
             } , h => action -= (h));
         }
