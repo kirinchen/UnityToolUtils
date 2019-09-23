@@ -35,7 +35,12 @@ namespace surfm.tool {
 
         public T get<T>(string k) {
             if (!map.ContainsKey(k)) throw new NullReferenceException(k);
-            return (T)map[k];
+            try {
+                return (T)map[k];
+            } catch (Exception e) {
+                Debug.LogError(k + " is " + e.Message);
+                throw new Exception(k+" is "+e.Message,e);
+            }
         }
 
         public object get(string k) {
