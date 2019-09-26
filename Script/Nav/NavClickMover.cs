@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,10 +8,12 @@ namespace surfm.tool {
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavClickMover : MonoBehaviour {
 
+
+
         public LayerMask mask;
         public NavMeshAgent agent { get; private set; }
         private IReactiveProperty<Vector3> targetPos = new ReactiveProperty<Vector3>(Vector3.zero);
-        private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(30f);
+        private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(7f);
         public Func<bool> onBeforeMove = () => true;
         private LineRenderer pathLine;
 
@@ -18,18 +21,19 @@ namespace surfm.tool {
         void Awake() {
             agent = GetComponent<NavMeshAgent>();
             pathLine = GetComponent<LineRenderer>();
-
-            //pathLine.material.shader = Shader.Find("Sprites/Default");
         }
 
         void Start() {
             targetPos.Value = transform.position;
             moveSpeed.Subscribe(mv => agent.speed = mv);
+            targetPos.Subscribe(p => {
+                agent.SetDestination(p);
+            });
         }
+
 
         protected virtual void Update() {
             onNewMoveTo();
-            moveToTarget();
             drawPath();
         }
 
@@ -44,9 +48,6 @@ namespace surfm.tool {
             }
         }
 
-        private void moveToTarget() {
-            agent.SetDestination(targetPos.Value);
-        }
 
         private void onNewMoveTo() {
             if (!Input.GetMouseButtonUp(0)) return;
@@ -55,8 +56,6 @@ namespace surfm.tool {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, mask)) {
                 Debug.Log("Col pos=" + hit.point);
-                agent.isStopped = true;
-                agent.ResetPath();
                 targetPos.Value = hit.point;
             }
         }
