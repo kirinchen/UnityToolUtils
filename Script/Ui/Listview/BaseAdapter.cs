@@ -1,4 +1,5 @@
-﻿using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
+﻿#if ListViewAdapter
+using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,3 +13,4 @@ namespace surfm.tool {
         void updateViewsHolder(DATA dataModel, VH newOrRecycled, int itemIndex) ;
     }
 }
+#endif

@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿#if DOTween
+
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,4 +44,6 @@ namespace surfm.tool {
 
     }
 }
+
+#endif
                             

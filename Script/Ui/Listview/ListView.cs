@@ -1,4 +1,6 @@
-﻿using frame8.Logic.Misc.Visual.UI.MonoBehaviours;
+﻿#if ListViewAdapter
+
+using frame8.Logic.Misc.Visual.UI.MonoBehaviours;
 using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using frame8.ScrollRectItemsAdapter.Util;
 using System;
@@ -169,3 +171,5 @@ namespace surfm.tool {
         }
     }
 }
+
+#endif

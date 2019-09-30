@@ -151,27 +151,42 @@ namespace surfm.tool {
             return string.Empty;
         }
 
+
+        private static JsonConverter jsonConverter
+        {
+            get
+            {
+#if AntiCheat
+                return ObscuredValueConverter.DEFAULT;            
+#else
+                return null;
+#endif
+
+            }
+        }
+
         public static object convert(object source, Type type) {
             string json = toJson(source);
-            return JsonConvert.DeserializeObject(json, type, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.DeserializeObject(json, type, jsonConverter);
         }
 
         public static object convertByJson(string json, Type type) {
-            return JsonConvert.DeserializeObject(json, type, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.DeserializeObject(json, type, jsonConverter);
         }
 
         public static T convertByJson<T>(string json) {
-            return JsonConvert.DeserializeObject<T>(json, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.DeserializeObject<T>(json, jsonConverter);
         }
 
         public static string toJson(object source) {
-            return JsonConvert.SerializeObject(source, ObscuredValueConverter.DEFAULT);
+            return JsonConvert.SerializeObject(source, jsonConverter);
         }
 
         public static E optMap<T, E>(Dictionary<T, E> map, T key, E _de = default) {
             if (map.ContainsKey(key)) return map[key];
             return _de;
         }
+
 
 
         public static List<Type> listExtends(Type root) {

@@ -1,5 +1,5 @@
 # Imports
-
+- UniRx : https://assetstore.unity.com/packages/tools/integration/unirx-reactive-extensions-for-unity-17276
 - Plugin UI Tween: https://www.assetstore.unity3d.com/en/#!/content/38583
 - Admob https://developers.google.com/admob/unity/start
 - Filebase 與 Admob 整合請參考: http://ddtwork.blogspot.tw/2017/10/unity-firebase-admob.html
@@ -10,3 +10,5 @@
   - Admob => -define:Admob
   - UnityAds => -define:UnityAds
   - ListViewAdapter => -define:ListViewAdapter
+  - AntiCheat => -define:AntiCheat
+  - DOTween => -define:DOTween

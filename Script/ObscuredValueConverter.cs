@@ -1,4 +1,5 @@
-﻿using CodeStage.AntiCheat.ObscuredTypes;
+﻿#if AntiCheat
+using CodeStage.AntiCheat.ObscuredTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace surfm.tool {
             ));
         }
 
-        #region implemented abstract members of JsonConverter
+#region implemented abstract members of JsonConverter
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             Type ty = value.GetType();
@@ -135,9 +136,10 @@ namespace surfm.tool {
             return _types.Any(t => t == objectType);
         }
 
-        #endregion
+#endregion
     }
 
 }
 
 
+#endif

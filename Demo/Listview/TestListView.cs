@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if ListViewAdapter
+
+using UnityEngine;
 using static surfm.tool.ListView;
 
 namespace surfm.tool.test {
@@ -17,3 +19,5 @@ namespace surfm.tool.test {
 
     }
 }
+
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if DOTween
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,3 +95,4 @@ namespace surfm.tool {
 
     }
 }
+#endif

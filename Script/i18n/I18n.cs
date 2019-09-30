@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using UnityEngine;
 
 
@@ -89,3 +91,4 @@ namespace surfm.tool.i18n {
 
     }
 }
+

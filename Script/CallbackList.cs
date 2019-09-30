@@ -21,8 +21,9 @@ namespace surfm.tool {
 
         public void done() {
             if (isDone()) return;
-            list.ForEach(a => a());
+            List<Action> al = new List<Action>(list);
             list = null;
+            al.ForEach(a => a());
         }
 
         internal void reset() {

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#if ListViewAdapter
+
+using System.Collections.Generic;
 using frame8.Logic.Misc.Visual.UI.ScrollRectItemsAdapter;
 using UnityEngine;
 using UnityEngine.UI;
@@ -81,3 +83,4 @@ namespace surfm.tool.test {
     }
 
 }
+#endif

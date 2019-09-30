@@ -1,4 +1,5 @@
-﻿using BestHTTP;
+﻿
+using BestHTTP;
 using Newtonsoft.Json;
 using surfm.tool;
 using System;
@@ -33,12 +34,12 @@ namespace com.surfm.rest {
             }
 
             public T getBody<T>() {
-                return JsonConvert.DeserializeObject<T>(response.DataAsText, ObscuredValueConverter.DEFAULT);
+                return JsonConvert.DeserializeObject<T>(response.DataAsText, jsonConverter);
             }
 
 
             public override string ToString() {
-                return JsonConvert.SerializeObject(this, ObscuredValueConverter.DEFAULT);
+                return JsonConvert.SerializeObject(this, jsonConverter);
             }
 
 
@@ -51,7 +52,16 @@ namespace com.surfm.rest {
         private int genId;
         private Dictionary<int, RequestBundle> map = new Dictionary<int, RequestBundle>();
         public Func<string> authorizationFunc = () => { return ""; };
+        private static JsonConverter jsonConverter {
+            get {
+#if AntiCheat
+                return ObscuredValueConverter.DEFAULT;            
+#else
+                return null;
+#endif
 
+            }
+        }
 
 
         void Start() { }
@@ -179,7 +189,7 @@ namespace com.surfm.rest {
             Debug.Log("postJson = " + u);
             HTTPRequest hr = new HTTPRequest(u, HTTPMethods.Post);
             if (data != null) {
-                string ourPostData = JsonConvert.SerializeObject(data, ObscuredValueConverter.DEFAULT);
+                string ourPostData = JsonConvert.SerializeObject(data, jsonConverter);
                 byte[] pData = Encoding.UTF8.GetBytes(ourPostData.ToCharArray());
                 hr.RawData = pData;
             }
@@ -221,3 +231,4 @@ namespace com.surfm.rest {
         }
     }
 }
+
