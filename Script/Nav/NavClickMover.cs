@@ -8,11 +8,9 @@ namespace surfm.tool {
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavClickMover : MonoBehaviour {
 
-
-
         public LayerMask mask;
         public NavMeshAgent agent { get; private set; }
-        private IReactiveProperty<Vector3> targetPos = new ReactiveProperty<Vector3>(Vector3.zero);
+        public IReactiveProperty<Vector3> targetPos { get; private set; } = new ReactiveProperty<Vector3>(Vector3.zero);
         private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(7f);
         public Func<bool> onBeforeMove = () => true;
         private LineRenderer pathLine;
@@ -55,7 +53,6 @@ namespace surfm.tool {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, mask)) {
-                Debug.Log("Col pos=" + hit.point);
                 targetPos.Value = hit.point;
             }
         }
