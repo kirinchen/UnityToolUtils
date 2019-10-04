@@ -165,6 +165,12 @@ namespace surfm.tool {
             }
         }
 
+
+        public static T convert<T>(object source) {
+            string json = toJson(source);
+            return JsonConvert.DeserializeObject<T>(json, jsonConverter);
+        }
+
         public static object convert(object source, Type type) {
             string json = toJson(source);
             return JsonConvert.DeserializeObject(json, type, jsonConverter);
@@ -197,6 +203,22 @@ namespace surfm.tool {
         public static T opt<T, I>(I i, Func<I, T> f, T _de) {
             if (i == null) return _de;
             return f(i);
+        }
+
+        public static int GetHashCode<T>(T[] array) {
+            // if non-null array then go into unchecked block to avoid overflow
+            if (array != null) {
+                unchecked {
+                    int hash = 17;
+                    // get hash code for all items in array
+                    foreach (var item in array) {
+                        hash = hash * 23 + ((item != null) ? item.GetHashCode() : 0);
+                    }
+                    return hash;
+                }
+            }
+            // if null, hash code is zero
+            return 0;
         }
 
     }

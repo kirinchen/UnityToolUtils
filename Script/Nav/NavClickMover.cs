@@ -1,10 +1,49 @@
 ﻿using System;
-using System.Collections;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace surfm.tool {
+
+    public class NavPath {
+        public NavMeshPathStatus status;
+        public Vector3[] corners;
+
+        public override int GetHashCode() {
+            int prime = 31;
+            int result = 1;
+            result = prime * result + CommUtils.GetHashCode(corners);
+            result = prime * result + status.GetHashCode();
+            return result;
+        }
+
+
+        public override bool Equals(object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (GetType() != obj.GetType())
+                return false;
+            NavPath other = (NavPath)obj;
+            if (!Enumerable.SequenceEqual(corners, other.corners))
+                return false;
+            if (status != other.status)
+                return false;
+            return true;
+        }
+
+    }
+
+    public static class NavPathEx {
+        public static NavPath toNavPath(this NavMeshPath nmp) {
+            return CommUtils.convert<NavPath>(nmp);
+        }
+
+    }
+
+
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavClickMover : MonoBehaviour {
 
@@ -12,6 +51,7 @@ namespace surfm.tool {
         public NavMeshAgent agent { get; private set; }
         public IReactiveProperty<Vector3> targetPos { get; private set; } = new ReactiveProperty<Vector3>(Vector3.zero);
         private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(7f);
+        public IReactiveProperty<NavPath> path { get; private set; } = new ReactiveProperty<NavPath>(null);
         public Func<bool> onBeforeMove = () => true;
         private LineRenderer pathLine;
 
@@ -33,6 +73,9 @@ namespace surfm.tool {
         protected virtual void Update() {
             onNewMoveTo();
             drawPath();
+            
+                path.Value = agent.path.toNavPath();
+              
         }
 
         private void drawPath() {
