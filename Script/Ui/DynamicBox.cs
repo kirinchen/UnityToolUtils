@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace surfm.tool {
@@ -39,10 +37,11 @@ namespace surfm.tool {
             } else {
                 y = rectT.sizeDelta.y;
             }
-
-            if (fitble) {
-                rectT.sizeDelta = new Vector2(x, y);
-            }
+            Vector2 v = new Vector2(x, y);
+             if (fitble  && v.x > 0 && v.y>0 ) {
+                 rectT.sizeDelta = v;
+             }       
+            Debug.Log("v:"+v);
 
 
         }
