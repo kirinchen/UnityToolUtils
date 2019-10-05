@@ -14,7 +14,7 @@ namespace surfm.tool {
         public LayerMask mask;
         public NavMeshAgent agent { get; private set; }
         public IReactiveProperty<Vector3> targetPos { get; private set; } = new ReactiveProperty<Vector3>(Vector3.zero);
-        private IReactiveProperty<float> moveSpeed = new ReactiveProperty<float>(7f);
+        public IReactiveProperty<float> moveSpeed { get; private set; } = new ReactiveProperty<float>(1.5f);
         public Func<bool> onBeforeMove = () => true;
         private LineRenderer pathLine;
 
