@@ -76,8 +76,33 @@ namespace surfm.tool {
 
 
     public class CallBackSetTool {
+
+        public class TBundle <T>{
+            public T obj;
+            public bool breakEvent;
+        }
+
+        public delegate TBundle<T> TBundleFunc<T>(TBundle<T> o);
+
         public delegate bool BoolFunc();
         public delegate string StringFunc(string ins);
+
+        public static CBResult<TBundle<T>> tBundlePositive<T>(TBundleFunc<T> func, TBundle<T> o) {
+             o=func(o);
+            return new CBResult<TBundle<T>>() {
+                breakloop = o.breakEvent,
+                ans = o
+            };
+
+        }
+
+        public static CBResult<T> action<T>(Action<T> arg1, T arg2) {
+            arg1(arg2);
+            return new CBResult<T>() {
+                breakloop = false,
+                ans = arg2
+            };
+        }
 
         public static CBResult<object> action(Action arg1, object arg2) {
             arg1();
@@ -94,6 +119,7 @@ namespace surfm.tool {
                 ans = b
             };
         }
+
 
 
         public static CBResult<string> stringNormal(StringFunc f, string arg2) {
