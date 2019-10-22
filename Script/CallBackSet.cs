@@ -16,6 +16,10 @@ namespace surfm.tool {
         }
 
 
+        public void add(F msf) {
+            add(msf, 0, null);
+        }
+
         public void add(F msf, int idx, object o) {
             if (!map.ContainsKey(msf)) {
                 map.Add(msf, idx);
@@ -77,7 +81,7 @@ namespace surfm.tool {
 
     public class CallBackSetTool {
 
-        public class TBundle <T>{
+        public class TBundle<T> {
             public T obj;
             public bool breakEvent;
         }
@@ -88,7 +92,7 @@ namespace surfm.tool {
         public delegate string StringFunc(string ins);
 
         public static CBResult<TBundle<T>> tBundlePositive<T>(TBundleFunc<T> func, TBundle<T> o) {
-             o=func(o);
+            o = func(o);
             return new CBResult<TBundle<T>>() {
                 breakloop = o.breakEvent,
                 ans = o

@@ -42,13 +42,13 @@ namespace surfm.tool {
         }
 
         public void unspawn(GameObject obj) {
+            listeners.ForEach(l => l.onUnSpawn(obj));
             PoolChild[] pcs = obj.GetComponentsInChildren<PoolChild>();
             foreach (PoolChild pc in pcs) {
                 pc.onUnspawn();
             }
             obj.SendMessage("OnUnspawn", SendMessageOptions.DontRequireReceiver);
             
-            listeners.ForEach(l => l.onUnSpawn(obj));
             for (int i = 0; i < pools.Count; i++) {
                 if (pools[i].Unspawn(obj)) return;
             }
