@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace surfm.tool {
-    public class CallbackList {
+    public class InitCallBack {
 
         private List<Action> list = new List<Action>();
 
