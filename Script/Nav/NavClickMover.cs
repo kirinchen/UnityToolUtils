@@ -55,7 +55,7 @@ namespace surfm.tool {
             if (!onBeforeMove()) return;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, mask)) {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) {
                 targetPos.Value = hit.point;
             }
         }

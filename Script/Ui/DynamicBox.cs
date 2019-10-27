@@ -41,7 +41,6 @@ namespace surfm.tool {
              if (fitble  && v.x > 0 && v.y>0 ) {
                  rectT.sizeDelta = v;
              }       
-            Debug.Log("v:"+v);
 
 
         }
