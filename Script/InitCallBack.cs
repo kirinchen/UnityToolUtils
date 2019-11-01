@@ -5,7 +5,11 @@ using UnityEngine;
 namespace surfm.tool {
     public class InitCallBack {
 
-        private List<Action> list = new List<Action>();
+        private List<Action> list = null;
+
+        public InitCallBack() {
+            list = new List<Action>();
+        }
 
         public void add(Action a) {
             if (list == null) {
