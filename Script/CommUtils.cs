@@ -161,10 +161,15 @@ namespace surfm.tool {
 #else
                 return null;
 #endif
-
             }
         }
 
+        private static IList<JsonConverter> jsonConverts = genJsonConverts();
+        private static IList<JsonConverter> genJsonConverts() {
+            IList<JsonConverter> cts = new List<JsonConverter>();
+            if (jsonConverter != null) cts.Add(jsonConverter);
+            return cts;
+        }
 
         public static T convert<T>(object source) {
             string json = toJson(source);
@@ -185,15 +190,16 @@ namespace surfm.tool {
         }
 
         public static string toJson(object source) {
-            return JsonConvert.SerializeObject(source, jsonConverter);
+            return JsonConvert.SerializeObject(source, new JsonSerializerSettings() {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = jsonConverts
+            });
         }
 
         public static E optMap<T, E>(Dictionary<T, E> map, T key, E _de = default) {
             if (map.ContainsKey(key)) return map[key];
             return _de;
         }
-
-
 
         public static List<Type> listExtends(Type root) {
             return Assembly.GetAssembly(root).GetTypes()
