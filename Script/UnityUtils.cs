@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace surfm.tool {
-    public static class UnityUtils  {
+    public static class UnityUtils {
 
         public static T getComponentByName<T>(this GameObject mb, string name) where T : Component {
             return getComponentByName<T>(mb, c => { return c.name.Equals(name); });
@@ -106,7 +104,7 @@ namespace surfm.tool {
         }
 
 
-        public static Component copyComponent(Component comp, Component other)  {
+        public static Component copyComponent(Component comp, Component other) {
             Type type = comp.GetType();
             if (type != other.GetType()) return null; // type mis-match
             BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default | BindingFlags.DeclaredOnly;
@@ -122,16 +120,16 @@ namespace surfm.tool {
             foreach (var finfo in finfos) {
                 finfo.SetValue(comp, finfo.GetValue(other));
             }
-            return comp ;
+            return comp;
         }
 
-        public static Component addComponent( GameObject go, Component toAdd)  {
+        public static Component addComponent(GameObject go, Component toAdd) {
             Component n = go.AddComponent(toAdd.GetType());
             return copyComponent(n, toAdd);
         }
 
 
-        public static bool mouseRaycast(Vector3 mousePos, int layerId , out RaycastHit hit) {
+        public static bool mouseRaycast(Vector3 mousePos, int layerId, out RaycastHit hit) {
             LayerMask mask = 1 << layerId;
             Ray ray = Camera.main.ScreenPointToRay(mousePos);
             return (Physics.Raycast(ray, out hit, Mathf.Infinity, mask));
@@ -151,6 +149,7 @@ namespace surfm.tool {
                 trans.gameObject.layer = layerNumber;
             }
         }
+
 
     }
 }
